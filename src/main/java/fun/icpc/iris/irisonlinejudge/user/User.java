@@ -25,6 +25,9 @@ public class User {
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "tb_user_permissions",
             joinColumns = @JoinColumn(name = "user_id"),
