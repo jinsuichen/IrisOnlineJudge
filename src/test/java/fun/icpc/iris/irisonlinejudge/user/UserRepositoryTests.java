@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.HashSet;
@@ -23,12 +25,17 @@ public class UserRepositoryTests {
     @Autowired
     private UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Test
     public void testFindById() {
         // Insert a user into the database
         User user = new User();
         user.setNickname("nick");
         user.setHandle("handle");
+        user.setPassword(passwordEncoder.encode("password"));
+        user.setPassword("password");
+
         entityManager.persist(user);
 
         // Query the user from the database
@@ -44,6 +51,9 @@ public class UserRepositoryTests {
         User user = new User();
         user.setNickname("jack");
         user.setHandle("jack2020");
+        user.setPassword(passwordEncoder.encode("password"));
+        user.setPassword("password");
+
         entityManager.persist(user);
 
         // Query the user from the database
@@ -75,6 +85,8 @@ public class UserRepositoryTests {
         User user = new User();
         user.setNickname("jack");
         user.setHandle("jack2020");
+        user.setPassword(passwordEncoder.encode("password"));
+        user.setPassword("password");
         user.setPermissions(permissions);
         entityManager.persist(user);
 
