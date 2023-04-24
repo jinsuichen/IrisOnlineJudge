@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping("/user/{handle}")
     public Result<User> queryUser(@PathVariable String handle) {
-        return userService.queryUser(handle);
+        return userService.queryUserByHandle(handle);
     }
 
 }

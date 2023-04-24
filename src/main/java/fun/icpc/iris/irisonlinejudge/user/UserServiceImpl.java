@@ -16,13 +16,17 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Result<Void> addUser(User user) {
+        boolean success = queryUserByHandle(user.getHandle()).isSuccess();
+        if(success) {
+            return Result.fail("User already exists");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return Result.success();
     }
 
     @Override
-    public Result<User> queryUser(String handle) {
+    public Result<User> queryUserByHandle(String handle) {
         User user = userRepository.findByHandle(handle).orElse(null);
         if (user == null) {
             return Result.fail("User not found");

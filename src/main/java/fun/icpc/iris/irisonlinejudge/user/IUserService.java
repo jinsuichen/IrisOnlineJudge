@@ -5,5 +5,5 @@ import fun.icpc.iris.irisonlinejudge.commons.Result;
 public interface IUserService {
     Result<Void> addUser(User user);
 
-    Result<User> queryUser(String handle);
+    Result<User> queryUserByHandle(String handle);
 }
