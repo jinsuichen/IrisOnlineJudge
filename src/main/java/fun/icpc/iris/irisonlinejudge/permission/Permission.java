@@ -3,6 +3,7 @@ package fun.icpc.iris.irisonlinejudge.permission;
 import fun.icpc.iris.irisonlinejudge.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "tb_permissions")
+@EqualsAndHashCode(exclude = "users")
 public class Permission {
 
     @Id
