@@ -4,7 +4,8 @@ import fun.icpc.iris.irisonlinejudge.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -13,11 +14,13 @@ public class Permission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "permission_id")
     private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "permissions")
-    private List<User> users;
+    private Set<User> users = new HashSet<>();
 
 }
