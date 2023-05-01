@@ -19,13 +19,13 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "handle", nullable = false)
+    @Column(name = "handle", unique = true, nullable = false, length = 50)
     private String handle;
 
-    @Column(name = "nickname", nullable = false)
+    @Column(name = "nickname", nullable = false, length = 50)
     private String nickname;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = 200)
     private String password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
