@@ -5,12 +5,14 @@ import fun.icpc.iris.irisonlinejudge.user.User;
 import fun.icpc.iris.irisonlinejudge.user.UserRepository;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,17 +39,14 @@ public class UserDetailServiceImpl implements UserDetailsService {
         // Query the user's permissions.
         Set<Permission> permissions = user.getPermissions();
 
-        // Convert the permissions to a wanted format.
-        StringBuilder stringBuilder = new StringBuilder();
-        for(Permission permission : permissions) {
-            stringBuilder.append(permission.getName()).append(",");
+        // Convert the permissions to a set of GrantedAuthority.
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        for (Permission permission : permissions) {
+            authorities.add(new SimpleGrantedAuthority(permission.getName()));
         }
-        String authority = stringBuilder.toString();
-        authority = authority.substring(0, Math.max(0, authority.length() - 1));
-
 
         // If the user exists, return the user information.
         String password = user.getPassword();
-        return new org.springframework.security.core.userdetails.User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
+        return new org.springframework.security.core.userdetails.User(username, password, authorities);
     }
 }
