@@ -1,48 +1,29 @@
-package fun.icpc.iris.irisonlinejudge.domain.entity;
+package fun.icpc.iris.irisonlinejudge.problem;
 
-import fun.icpc.iris.irisonlinejudge.domain.enums.JudgerTypeEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
-/**
- * The Dockerfile of a problem.
- */
 @Data
 @Entity
-@Table(name = "judger")
-public class JudgerEntity {
+@Table(name = "tb_judgers")
+public class Judger {
 
-    /**
-     * The id of the Dockerfile.
-     */
     @Id
-    @Column
+    @Column(name = "judger_id")
     private Long judgerId;
 
-    /**
-     * The name of the Dockerfile.
-     */
-    @Column(nullable = false, length = 50)
-    @Enumerated(EnumType.STRING)
-    private JudgerTypeEnum judgerType;
+    @Column(name = "name", nullable = false, length = 50)
+    private String name;
 
-    /**
-     * The description of the Dockerfile.
-     */
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    /**
-     * Is the Dockerfile enabled?
-     */
-    @Column(nullable = false)
+    @Column(name = "is_enabled", nullable = false)
     private Boolean isEnabled;
 
-    /**
-     * The associated problems.
-     */
-    @OneToMany(mappedBy = "judger", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<ProblemEntity> problems;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "judger_id")
+    private List<Problem> problems;
 }
