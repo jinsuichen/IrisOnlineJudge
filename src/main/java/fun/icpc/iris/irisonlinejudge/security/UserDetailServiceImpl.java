@@ -16,6 +16,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The implementation of UserDetailsService.
+ */
 @Slf4j
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -23,6 +26,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Resource
     private UserRepository userRepository;
 
+    /**
+     * Load the user information by username.
+     * @param username The username of the user.
+     * @return The user information.
+     * @throws UsernameNotFoundException If the user does not exist.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

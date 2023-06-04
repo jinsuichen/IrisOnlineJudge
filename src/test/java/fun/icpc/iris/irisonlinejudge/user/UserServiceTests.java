@@ -8,13 +8,22 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * User Service Tests
+ */
 @SpringBootTest
 @ActiveProfiles("test")
 public class UserServiceTests {
 
+    /**
+     * User Service
+     */
     @Resource
     private IUserService userService;
 
+    /**
+     * Test add user.
+     */
     @Test
     public void testAddUser() {
         User user = new User();
@@ -30,6 +39,9 @@ public class UserServiceTests {
     }
 
 
+    /**
+     * Test query user by handle.
+     */
     @Test
     public void testQueryUserByHandle() {
         // Add a test user.
