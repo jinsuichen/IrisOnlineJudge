@@ -15,18 +15,33 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * User Repository Tests
+ */
 @DataJpaTest
 @ActiveProfiles("test")
 public class UserRepositoryTests {
 
+    /**
+     * Test entity manager
+     */
     @Autowired
     private TestEntityManager entityManager;
 
+    /**
+     * User repository
+     */
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Password encoder
+     */
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    /**
+     * Test find by id.
+     */
     @Test
     public void testFindById() {
         // Insert a user into the database
@@ -45,6 +60,9 @@ public class UserRepositoryTests {
         assertEquals(user.getHandle(), result.get().getHandle());
     }
 
+    /**
+     * Test find by handle.
+     */
     @Test
     public void testFindByHandle() {
         // Insert a user into the database
@@ -64,6 +82,9 @@ public class UserRepositoryTests {
     }
 
 
+    /**
+     * Test find by handle not exist.
+     */
     @Test
     public void testFindByHandleNotExist() {
         // Query the user from the database
@@ -71,6 +92,9 @@ public class UserRepositoryTests {
         assertTrue(result.isEmpty());
     }
 
+    /**
+     * Test find permission by handle.
+     */
     @Test
     public void testFindPermissionByHandle() {
 
