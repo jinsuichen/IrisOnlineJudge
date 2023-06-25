@@ -1,29 +1,97 @@
 package fun.icpc.iris.irisonlinejudge.user;
 
-import fun.icpc.iris.irisonlinejudge.permission.Permission;
-import jakarta.persistence.*;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * The user.
+ */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "tb_users")
-public class User {
+@Table(indexes = {
+        @Index(name = "idx_user_handle", columnList = "handle", unique = true)
+})
+public class User implements UserDetails {
 
+    /**
+     * The id of the user.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long userId;
 
+    /**
+     * The handle of the user.
+     */
+    @Column(unique = true, nullable = false, length = 50)
     private String handle;
 
+    /**
+     * The nickname of the user.
+     */
+    @Column(nullable = false, length = 50)
     private String nickname;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "tb_user_permissions",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private List<Permission> permissions = new ArrayList<>();
+    /**
+     * The password of the user.
+     */
+    @Column(nullable = false, length = 200)
+    private String password;
 
+    /**
+     * The role of the user.
+     */
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
+    }
+
+    @Override
+    public String getUsername() {
+        return handle;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
