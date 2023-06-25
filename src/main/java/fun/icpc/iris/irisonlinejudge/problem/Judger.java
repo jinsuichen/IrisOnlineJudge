@@ -1,47 +1,53 @@
 package fun.icpc.iris.irisonlinejudge.problem;
 
-import jakarta.persistence.*;
-import lombok.Data;
-
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.Data;
 
 /**
  * The judger of a problem.
  */
 @Data
 @Entity
-@Table(name = "tb_judgers")
 public class Judger {
 
     /**
      * The id of the judger.
      */
     @Id
-    @Column(name = "judger_id")
+    @Column
     private Long judgerId;
 
     /**
      * The name of the judger.
      */
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
+    @Column(nullable = false, length = 50)
+    @Enumerated(EnumType.STRING)
+    private JudgerTypeEnum judgerType;
 
     /**
      * The description of the judger.
      */
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     /**
      * Is the judger enabled?
      */
-    @Column(name = "is_enabled", nullable = false)
+    @Column(nullable = false)
     private Boolean isEnabled;
 
     /**
      * The associated problems.
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "judger_id")
+    @OneToMany(mappedBy = "judger", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Problem> problems;
 }
