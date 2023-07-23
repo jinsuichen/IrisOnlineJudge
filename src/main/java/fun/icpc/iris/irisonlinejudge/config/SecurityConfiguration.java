@@ -1,8 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.config;
 
 import static fun.icpc.iris.irisonlinejudge.user.Permission.*;
-import static fun.icpc.iris.irisonlinejudge.user.Role.ADMIN;
-import static fun.icpc.iris.irisonlinejudge.user.Role.MANAGER;
+import static fun.icpc.iris.irisonlinejudge.user.Role.*;
 import static org.springframework.http.HttpMethod.*;
 
 import org.springframework.context.annotation.Bean;
@@ -49,7 +48,8 @@ public class SecurityConfiguration {
                         "/configuration/security",
                         "/swagger-ui/**",
                         "/webjars/**",
-                        "/swagger-ui.html"
+                        "/swagger-ui.html",
+                        "/api/v1/judge/**"
                 )
                 .permitAll()
 
@@ -64,6 +64,8 @@ public class SecurityConfiguration {
                         MANAGER_UPDATE.name())
                 .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(),
                         MANAGER_DELETE.name())
+
+                .requestMatchers("/api/v1/judger/**").hasAnyRole(ADMIN.name(), MANAGER.name(), USER.name())
 
 
                 /* .requestMatchers("/api/v1/admin/**").hasRole(ADMIN.name())
