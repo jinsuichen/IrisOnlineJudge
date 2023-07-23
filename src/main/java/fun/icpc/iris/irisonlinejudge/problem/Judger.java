@@ -13,34 +13,34 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 /**
- * The judger of a problem.
+ * The Dockerfile of a problem.
  */
 @Data
 @Entity
 public class Judger {
 
     /**
-     * The id of the judger.
+     * The id of the Dockerfile.
      */
     @Id
     @Column
     private Long judgerId;
 
     /**
-     * The name of the judger.
+     * The name of the Dockerfile.
      */
     @Column(nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
     private JudgerTypeEnum judgerType;
 
     /**
-     * The description of the judger.
+     * The description of the Dockerfile.
      */
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     /**
-     * Is the judger enabled?
+     * Is the Dockerfile enabled?
      */
     @Column(nullable = false)
     private Boolean isEnabled;

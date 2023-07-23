@@ -71,7 +71,7 @@ public class Problem {
     private List<TestCase> testCases;
 
     /**
-     * The associated judger.
+     * The associated Dockerfile.
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "judger_id", nullable = false)
