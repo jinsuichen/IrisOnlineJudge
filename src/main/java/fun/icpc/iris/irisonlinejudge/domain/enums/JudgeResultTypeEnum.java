@@ -1,4 +1,4 @@
-package fun.icpc.iris.irisonlinejudge.service.judge;
+package fun.icpc.iris.irisonlinejudge.domain.enums;
 
 
 public enum JudgeResultTypeEnum {

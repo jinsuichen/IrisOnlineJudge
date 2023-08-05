@@ -1,23 +1,18 @@
-package fun.icpc.iris.irisonlinejudge.domain.problem;
+package fun.icpc.iris.irisonlinejudge.domain.entity;
+
+import fun.icpc.iris.irisonlinejudge.domain.enums.JudgerTypeEnum;
+import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import lombok.Data;
 
 /**
  * The Dockerfile of a problem.
  */
 @Data
 @Entity
-public class Judger {
+@Table(name = "judger")
+public class JudgerEntity {
 
     /**
      * The id of the Dockerfile.
@@ -49,5 +44,5 @@ public class Judger {
      * The associated problems.
      */
     @OneToMany(mappedBy = "judger", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Problem> problems;
+    private List<ProblemEntity> problems;
 }

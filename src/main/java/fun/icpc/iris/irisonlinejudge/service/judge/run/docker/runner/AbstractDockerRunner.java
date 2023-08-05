@@ -4,6 +4,7 @@ package fun.icpc.iris.irisonlinejudge.service.judge.run.docker.runner;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.model.HostConfig;
+import fun.icpc.iris.irisonlinejudge.domain.dto.RunningResultDTO;
 import fun.icpc.iris.irisonlinejudge.service.judge.run.SandboxRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,9 +25,9 @@ public abstract class AbstractDockerRunner implements SandboxRunner {
      * @param memoryLimit     memory limit in megabytes
      * @return standard output content
      */
-    public RunningResult doRun(String stdInputContent, String codeContent, Long memoryLimit) {
+    public RunningResultDTO doRun(String stdInputContent, String codeContent, Long memoryLimit) {
         String container = createContainer(memoryLimit);
-        RunningResult runningResult = runDocker(stdInputContent, codeContent, container);
+        RunningResultDTO runningResult = runDocker(stdInputContent, codeContent, container);
         destroyContainer(container);
         return runningResult;
     }
@@ -39,7 +40,7 @@ public abstract class AbstractDockerRunner implements SandboxRunner {
      * @param codeContent     code content
      * @return standard output content
      */
-    public RunningResult doRun(String stdInputContent, String codeContent) {
+    public RunningResultDTO doRun(String stdInputContent, String codeContent) {
         return doRun(stdInputContent, codeContent, 256L);
     }
 
@@ -81,7 +82,7 @@ public abstract class AbstractDockerRunner implements SandboxRunner {
      * @param codeContent     code content
      * @return standard output content
      */
-    protected abstract RunningResult runDocker(String stdInputContent, String codeContent, String containerId);
+    protected abstract RunningResultDTO runDocker(String stdInputContent, String codeContent, String containerId);
 
 
     /**

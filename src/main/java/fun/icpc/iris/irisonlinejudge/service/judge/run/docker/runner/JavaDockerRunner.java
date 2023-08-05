@@ -1,10 +1,12 @@
 package fun.icpc.iris.irisonlinejudge.service.judge.run.docker.runner;
 
 
+import fun.icpc.iris.irisonlinejudge.domain.dto.RunningResultDTO;
+
 public class JavaDockerRunner extends AbstractDockerRunner {
 
     @Override
-    protected RunningResult runDocker(String stdInputContent, String codeContent, String containerId) {
+    protected RunningResultDTO runDocker(String stdInputContent, String codeContent, String containerId) {
         return null;
     }
 }

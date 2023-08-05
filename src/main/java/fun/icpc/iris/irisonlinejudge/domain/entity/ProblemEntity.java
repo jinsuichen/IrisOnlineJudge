@@ -1,29 +1,18 @@
-package fun.icpc.iris.irisonlinejudge.domain.problem;
+package fun.icpc.iris.irisonlinejudge.domain.entity;
+
+import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.Data;
 
 /**
  * The problem.
  */
 @Data
 @Entity
-public class Problem {
+@Table(name = "problem")
+public class ProblemEntity {
 
     /**
      * The id of the problem.
@@ -68,14 +57,14 @@ public class Problem {
      * The associated test cases.
      */
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<TestCase> testCases;
+    private List<TestcaseEntity> testcases;
 
     /**
      * The associated Dockerfile.
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "judger_id", nullable = false)
-    private Judger judger;
+    private JudgerEntity judger;
 
     /**
      * When the problem is created, set the last updated time to the current time.

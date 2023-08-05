@@ -3,6 +3,7 @@ package fun.icpc.iris.irisonlinejudge.service.judge.run.docker.runner;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
 import fun.icpc.iris.irisonlinejudge.commons.exception.SandboxRunnerException;
 import fun.icpc.iris.irisonlinejudge.commons.util.TarUtils;
+import fun.icpc.iris.irisonlinejudge.domain.dto.RunningResultDTO;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -14,7 +15,7 @@ public class PythonDockerRunner extends AbstractDockerRunner {
 
 
     @Override
-    protected RunningResult runDocker(String stdInputContent, String codeContent, String containerId) {
+    protected RunningResultDTO runDocker(String stdInputContent, String codeContent, String containerId) {
 
         InputStream inputStream;
 
@@ -48,6 +49,6 @@ public class PythonDockerRunner extends AbstractDockerRunner {
             throw new SandboxRunnerException();
         }
 
-        return new RunningResult(outputStream.toString(), "", 0);
+        return new RunningResultDTO(outputStream.toString(), "", 0);
     }
 }

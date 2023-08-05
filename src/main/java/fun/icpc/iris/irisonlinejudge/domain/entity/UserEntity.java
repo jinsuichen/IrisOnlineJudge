@@ -1,5 +1,6 @@
-package fun.icpc.iris.irisonlinejudge.domain.user;
+package fun.icpc.iris.irisonlinejudge.domain.entity;
 
+import fun.icpc.iris.irisonlinejudge.domain.enums.RoleTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,10 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(indexes = {
-        @Index(name = "idx_user_handle", columnList = "handle", unique = true)
-})
-public class User {
+@Table(name = "user", indexes = {@Index(name = "idx_user_handle", columnList = "handle", unique = true)})
+public class UserEntity {
 
     /**
      * The id of the user.
@@ -49,5 +48,5 @@ public class User {
      * The role of the user.
      */
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private RoleTypeEnum role;
 }

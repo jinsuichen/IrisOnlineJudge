@@ -1,4 +1,4 @@
-package fun.icpc.iris.irisonlinejudge.domain.problem;
+package fun.icpc.iris.irisonlinejudge.domain.enums;
 
 /**
  * The enum Judger type enum.

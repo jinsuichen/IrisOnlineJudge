@@ -1,16 +1,10 @@
 package fun.icpc.iris.irisonlinejudge.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+public interface AuthenticationService {
 
+    void register(String handle, String nickName, String password);
 
-/**
- * The service for authentication.
- */
-@Service
-@RequiredArgsConstructor
-public class AuthenticationService {
+    void login(String handle, String password);
 
-
-
+    void logout();
 }

@@ -1,11 +1,11 @@
-package fun.icpc.iris.irisonlinejudge.domain.user;
+package fun.icpc.iris.irisonlinejudge.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Role {
+public enum RoleTypeEnum {
     USER("User"),
     MANAGER("Manager"),
     ADMIN("Admin");

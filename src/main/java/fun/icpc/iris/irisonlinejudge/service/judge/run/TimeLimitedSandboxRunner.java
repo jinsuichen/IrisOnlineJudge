@@ -1,13 +1,13 @@
 package fun.icpc.iris.irisonlinejudge.service.judge.run;
 
-import fun.icpc.iris.irisonlinejudge.service.judge.run.docker.runner.RunningResult;
+import fun.icpc.iris.irisonlinejudge.domain.dto.RunningResultDTO;
 
 public interface TimeLimitedSandboxRunner extends SandboxRunner {
 
-    default RunningResult doRun(String stdInputContent, String codeContent, Long memoryLimit) {
+    default RunningResultDTO doRun(String stdInputContent, String codeContent, Long memoryLimit) {
         return doRun(stdInputContent, codeContent, memoryLimit, 2000L);
     }
 
-    RunningResult doRun(String stdInputContent, String codeContent, Long memoryLimit, Long timeLimit);
+    RunningResultDTO doRun(String stdInputContent, String codeContent, Long memoryLimit, Long timeLimit);
 
 }

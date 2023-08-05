@@ -1,18 +1,18 @@
 package fun.icpc.iris.irisonlinejudge.repo;
 
-import java.util.Optional;
-
-import fun.icpc.iris.irisonlinejudge.domain.user.User;
+import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * The user repository.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    Optional<User> findByHandle(String handle);
+    Optional<UserEntity> findByHandle(String handle);
 
     boolean existsByHandle(String handle);
 
