@@ -2,6 +2,7 @@ package fun.icpc.iris.irisonlinejudge.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import fun.icpc.iris.irisonlinejudge.domain.user.Role;
 import org.junit.jupiter.api.Test;
 
 class RoleTest {

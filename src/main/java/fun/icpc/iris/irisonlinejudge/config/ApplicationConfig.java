@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import fun.icpc.iris.irisonlinejudge.user.UserRepository;
+import fun.icpc.iris.irisonlinejudge.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 /**

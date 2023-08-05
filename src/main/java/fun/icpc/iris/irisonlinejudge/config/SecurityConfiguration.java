@@ -1,7 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.config;
 
-import static fun.icpc.iris.irisonlinejudge.user.Permission.*;
-import static fun.icpc.iris.irisonlinejudge.user.Role.*;
+import static fun.icpc.iris.irisonlinejudge.domain.user.Permission.*;
+import static fun.icpc.iris.irisonlinejudge.domain.user.Role.*;
 import static org.springframework.http.HttpMethod.*;
 
 import org.springframework.context.annotation.Bean;
