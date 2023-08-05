@@ -1,14 +1,12 @@
 package fun.icpc.iris.irisonlinejudge.judge.run.docker.runner;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.model.HostConfig;
-
 import fun.icpc.iris.irisonlinejudge.judge.run.SandboxRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 @Component
@@ -65,6 +63,12 @@ public abstract class AbstractDockerRunner implements SandboxRunner {
         String containerId = containerResponse.getId();
 
         dockerClient.startContainerCmd(containerId).exec();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         return containerId;
     }

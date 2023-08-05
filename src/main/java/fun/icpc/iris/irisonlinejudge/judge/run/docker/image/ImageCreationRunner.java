@@ -1,13 +1,12 @@
 package fun.icpc.iris.irisonlinejudge.judge.run.docker.image;
 
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Build docker image for judger when application starts
@@ -22,12 +21,6 @@ public class ImageCreationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
-        if (imageCreator.isImageExist()) {
-            log.info("Image already exists, skip building image.");
-            return;
-        }
-
 
         log.info("Building image... It may take 5-10 minutes, please wait.");
 
@@ -52,5 +45,7 @@ public class ImageCreationRunner implements ApplicationRunner {
         String imageId = imageCreator.createImage();
 
         log.info("Image built successfully. Image id: {}", imageId);
+
+        loggingThread.interrupt();
     }
 }
