@@ -4,8 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import fun.icpc.iris.irisonlinejudge.commons.utils.IrisResponse;
-import fun.icpc.iris.irisonlinejudge.commons.utils.IrisResponseFactory;
+import fun.icpc.iris.irisonlinejudge.commons.util.IrisResponse;
+import fun.icpc.iris.irisonlinejudge.commons.util.IrisResponseFactory;
 
 /**
  * The Iris exception handler, which handles all the exceptions thrown by Iris Online Judge.
