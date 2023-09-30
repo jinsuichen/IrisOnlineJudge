@@ -1,4 +1,4 @@
-package fun.icpc.iris.irisonlinejudge.service.judge.run.docker.image;
+package fun.icpc.iris.irisonlinejudge.config;
 
 
 import com.github.dockerjava.api.DockerClient;

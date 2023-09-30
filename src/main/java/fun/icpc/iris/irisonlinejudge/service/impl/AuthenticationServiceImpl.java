@@ -1,4 +1,4 @@
-package fun.icpc.iris.irisonlinejudge.service.auth;
+package fun.icpc.iris.irisonlinejudge.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

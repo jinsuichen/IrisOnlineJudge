@@ -1,4 +1,4 @@
-package fun.icpc.iris.irisonlinejudge.service.judge.run.docker.image;
+package fun.icpc.iris.irisonlinejudge.config;
 
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class ImageCreationRunner implements ApplicationRunner {
     private final ImageCreator imageCreator;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
 
         log.info("Building image... It may take 5-10 minutes, please wait.");
 
