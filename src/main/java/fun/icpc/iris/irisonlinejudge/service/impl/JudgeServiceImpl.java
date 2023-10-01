@@ -59,7 +59,7 @@ public class JudgeServiceImpl implements JudgeService {
                 () -> runDocker(stdInputContent, codeContent, containerId, execCommandTypeEnum, timeLimit)
         );
 
-        final long mostWaitTime = timeLimit * 2000;
+        final long mostWaitTime = timeLimit * 2;
 
         try {
             return runningResultFuture.get(mostWaitTime, TimeUnit.SECONDS);
