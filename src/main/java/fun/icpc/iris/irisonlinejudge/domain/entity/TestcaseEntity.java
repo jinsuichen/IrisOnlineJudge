@@ -3,6 +3,8 @@ package fun.icpc.iris.irisonlinejudge.domain.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * The test case of a problem.
  */
@@ -17,7 +19,21 @@ public class TestcaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long problemCaseId;
+    private Long id;
+
+    /**
+     * The time when the test case was created.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private LocalDateTime gmtCreated;
+
+    /**
+     * The time when the test case was modified.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private LocalDateTime gmtModified;
 
     /**
      * The associated problem.
@@ -55,4 +71,21 @@ public class TestcaseEntity {
      */
     @Column(nullable = false)
     private Boolean isPublic;
+
+    /**
+     * When the problem is created, set the created time and the last updated time to the current time.
+     */
+    @PrePersist
+    protected void onCreate() {
+        this.gmtCreated = LocalDateTime.now();
+        this.gmtModified = LocalDateTime.now();
+    }
+
+    /**
+     * When the problem is created, set the last updated time to the current time.
+     */
+    @PreUpdate
+    protected void onUpdate() {
+        this.gmtModified = LocalDateTime.now();
+    }
 }

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * The user.
  */
@@ -24,7 +26,21 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long userId;
+    private Long id;
+
+    /**
+     * The time when the user was created.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private LocalDateTime gmtCreated;
+
+    /**
+     * The time when the user was modified.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private LocalDateTime gmtModified;
 
     /**
      * The handle of the user.
@@ -49,4 +65,21 @@ public class UserEntity {
      */
     @Enumerated(EnumType.STRING)
     private RoleTypeEnum role;
+
+    /**
+     * When the problem is created, set the created time and the last updated time to the current time.
+     */
+    @PrePersist
+    protected void onCreate() {
+        this.gmtCreated = LocalDateTime.now();
+        this.gmtModified = LocalDateTime.now();
+    }
+
+    /**
+     * When the problem is created, set the last updated time to the current time.
+     */
+    @PreUpdate
+    protected void onUpdate() {
+        this.gmtModified = LocalDateTime.now();
+    }
 }
