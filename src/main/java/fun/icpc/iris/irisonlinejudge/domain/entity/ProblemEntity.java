@@ -1,5 +1,6 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
+import fun.icpc.iris.irisonlinejudge.domain.enums.JudgerTypeEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -60,11 +61,10 @@ public class ProblemEntity {
     private List<TestcaseEntity> testcases;
 
     /**
-     * The associated Dockerfile.
+     * The associated judge type.
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "judger_id", nullable = false)
-    private JudgerEntity judger;
+    @Column(nullable = false)
+    private JudgerTypeEnum judgeType;
 
     /**
      * When the problem is created, set the last updated time to the current time.
