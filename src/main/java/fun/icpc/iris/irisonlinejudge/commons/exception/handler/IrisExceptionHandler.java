@@ -1,11 +1,11 @@
-package fun.icpc.iris.irisonlinejudge.commons.exception;
+package fun.icpc.iris.irisonlinejudge.commons.exception.handler;
 
+import fun.icpc.iris.irisonlinejudge.commons.exception.BaseIrisException;
+import fun.icpc.iris.irisonlinejudge.commons.util.IrisResponse;
+import fun.icpc.iris.irisonlinejudge.commons.util.IrisResponseFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import fun.icpc.iris.irisonlinejudge.commons.util.IrisResponse;
-import fun.icpc.iris.irisonlinejudge.commons.util.IrisResponseFactory;
 
 /**
  * The Iris exception handler, which handles all the exceptions thrown by Iris Online Judge.

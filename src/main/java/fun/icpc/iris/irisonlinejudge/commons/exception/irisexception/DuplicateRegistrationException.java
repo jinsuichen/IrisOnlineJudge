@@ -1,4 +1,6 @@
-package fun.icpc.iris.irisonlinejudge.commons.exception;
+package fun.icpc.iris.irisonlinejudge.commons.exception.irisexception;
+
+import fun.icpc.iris.irisonlinejudge.commons.exception.BaseIrisException;
 
 /**
  * Throw this exception when a user tries to register with a handle that already exists.
