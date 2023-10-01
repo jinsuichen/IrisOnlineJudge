@@ -9,5 +9,5 @@ package fun.icpc.iris.irisonlinejudge.commons.util;
  * @param message The message of the result.
  * @param data    The data of the result.
  */
-public record IrisResponse<T>(boolean success, String message, T data) {
+public record IrisMessage<T>(boolean success, String message, T data) {
 }

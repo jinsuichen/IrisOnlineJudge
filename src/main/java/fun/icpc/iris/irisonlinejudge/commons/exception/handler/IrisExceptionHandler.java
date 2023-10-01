@@ -1,8 +1,8 @@
 package fun.icpc.iris.irisonlinejudge.commons.exception.handler;
 
 import fun.icpc.iris.irisonlinejudge.commons.exception.BaseIrisException;
-import fun.icpc.iris.irisonlinejudge.commons.util.IrisResponse;
-import fun.icpc.iris.irisonlinejudge.commons.util.IrisResponseFactory;
+import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
+import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessageFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,8 +20,8 @@ public class IrisExceptionHandler {
      * @return the Iris response
      */
     @ExceptionHandler(BaseIrisException.class)
-    public ResponseEntity<IrisResponse<Void>> handleIrisBaseException(BaseIrisException e) {
-        return ResponseEntity.badRequest().body(IrisResponseFactory.fail(e.getMessage()));
+    public ResponseEntity<IrisMessage<Void>> handleIrisBaseException(BaseIrisException e) {
+        return ResponseEntity.badRequest().body(IrisMessageFactory.fail(e.getMessage()));
     }
 
 }
