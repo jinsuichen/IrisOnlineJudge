@@ -18,4 +18,8 @@ public class RedisConstantsUtils {
     public static String userLoginKey(String token) {
         return "iris:user:login:" + token;
     }
+
+    public static String userSaltKey(String handle) {
+        return "iris:user:salt:" + handle;
+    }
 }

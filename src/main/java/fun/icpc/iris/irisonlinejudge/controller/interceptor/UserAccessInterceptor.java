@@ -2,7 +2,6 @@ package fun.icpc.iris.irisonlinejudge.controller.interceptor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import fun.icpc.iris.irisonlinejudge.commons.context.UserContext;
-import fun.icpc.iris.irisonlinejudge.commons.util.AuthorizationUtils;
 import fun.icpc.iris.irisonlinejudge.commons.util.JsonUtils;
 import fun.icpc.iris.irisonlinejudge.commons.util.RedisConstantsUtils;
 import fun.icpc.iris.irisonlinejudge.domain.converter.UserConverter;
@@ -33,13 +32,15 @@ public class UserAccessInterceptor implements HandlerInterceptor {
 
     private final UserConverter userConverter;
 
+    private final String BEARER_PREFIX = "Bearer ";
+
     @Override
     public boolean preHandle(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull Object handler) throws JsonProcessingException {
 
-        Optional<String> tokenOption = AuthorizationUtils.extractToken(request);
+        Optional<String> tokenOption = extractToken(request);
         if(tokenOption.isEmpty()) {
             // The user is not logged in.
             return true;
@@ -70,5 +71,16 @@ public class UserAccessInterceptor implements HandlerInterceptor {
             @NonNull HttpServletResponse response,
             @NonNull Object handler, Exception ex) {
         UserContext.removeUser();
+    }
+
+    private Optional<String> extractToken(HttpServletRequest request) {
+
+        String authorization = request.getHeader("Authorization");
+        if(Objects.isNull(authorization) || !authorization.startsWith(BEARER_PREFIX)) {
+            return Optional.empty();
+        }
+
+        authorization = authorization.substring(BEARER_PREFIX.length());
+        return Optional.of(authorization);
     }
 }
