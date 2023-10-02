@@ -24,9 +24,9 @@ public class AuthorizationUtils {
     }
 
     public static String hashPassword(String password) {
-        // Generate salt
+        // Generate a 128-bit (16-byte) salt
         SecureRandom random = new SecureRandom();
-        byte[] saltBytes = new byte[128];
+        byte[] saltBytes = new byte[16];
         random.nextBytes(saltBytes);
 
         byte[] hashPassword = BCrypt.generate(password.getBytes(), saltBytes, 10);
