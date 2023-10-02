@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -31,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @SneakyThrows
     @Override
+    @Transactional
     public IrisMessage<Boolean> register(String handle, String nickName, String password) {
         if(userRepository.existsByHandle(handle)) {
             return IrisMessageFactory.fail("Handle already exists.");
