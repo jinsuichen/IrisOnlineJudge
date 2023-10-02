@@ -48,7 +48,7 @@ public class UserAccessInterceptor implements HandlerInterceptor {
 
         // Get user info from redis.
         String token = tokenOption.get();
-        String userJson = stringRedisTemplate.opsForValue().get(token);
+        String userJson = stringRedisTemplate.opsForValue().get(RedisConstantsUtils.userLoginKey(token));
         if(Objects.isNull(userJson)) {
             log.info("Token {} is invalid", token);
             return true;
