@@ -5,6 +5,7 @@ import fun.icpc.iris.irisonlinejudge.domain.dto.UserDTO;
 import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
 import fun.icpc.iris.irisonlinejudge.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,6 +24,7 @@ public class UserConverter {
                 .handle(userEntity.getHandle())
                 .nickname(userEntity.getNickName())
                 .role(userEntity.getRole())
+                .loginUUID(StringUtils.EMPTY)
                 .build();
     }
 }

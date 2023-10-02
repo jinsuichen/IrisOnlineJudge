@@ -12,7 +12,7 @@ public interface UserService {
      * @param password The password of the user.
      * @return If register successfully, return true, else return false.
      */
-    IrisMessage<Boolean> register(String handle, String nickName, String password);
+    IrisMessage<String> register(String handle, String nickName, String password);
 
     /**
      * Login with handle and password.
@@ -25,10 +25,19 @@ public interface UserService {
 
     /**
      * Logout.
+     * Only current client will be logout.
      *
      * @return If logout successfully, return true, else return false.
      */
     IrisMessage<Boolean> logout();
+
+    /**
+     * Logout.
+     * All clients will be logout.
+     *
+     * @return If logout successfully, return true, else return false.
+     */
+    IrisMessage<Boolean> logoutAll();
 
     /**
      * Check whether the user has logged in.

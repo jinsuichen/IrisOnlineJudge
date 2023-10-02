@@ -1,15 +1,17 @@
 package fun.icpc.iris.irisonlinejudge.controller.interceptor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import fun.icpc.iris.irisonlinejudge.commons.context.UserContext;
+import fun.icpc.iris.irisonlinejudge.commons.exception.irisexception.AuthSystemException;
 import fun.icpc.iris.irisonlinejudge.commons.util.JsonUtils;
 import fun.icpc.iris.irisonlinejudge.commons.util.RedisConstantsUtils;
 import fun.icpc.iris.irisonlinejudge.domain.converter.UserConverter;
 import fun.icpc.iris.irisonlinejudge.domain.dto.UserDTO;
+import fun.icpc.iris.irisonlinejudge.domain.record.LoginToken;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -38,28 +40,49 @@ public class UserAccessInterceptor implements HandlerInterceptor {
     public boolean preHandle(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull Object handler) throws JsonProcessingException {
+            @NonNull Object handler) {
 
-        Optional<String> tokenOption = extractToken(request);
-        if(tokenOption.isEmpty()) {
+        Optional<String> optionalToken = extractToken(request);
+        if(optionalToken.isEmpty()) {
             // The user is not logged in.
             return true;
         }
 
         // Get user info from redis.
-        String token = tokenOption.get();
-        String userJson = stringRedisTemplate.opsForValue().get(RedisConstantsUtils.userLoginKey(token));
-        if(Objects.isNull(userJson)) {
-            log.info("Token {} is invalid", token);
+        Optional<LoginToken> optionalLoginToken = LoginToken.fromContent(optionalToken.get());
+        if(optionalLoginToken.isEmpty()) {
+            // The token is invalid.
+            log.info("User token is invalid.");
             return true;
         }
+
+        LoginToken token = optionalLoginToken.get();
+        Boolean hasUUID = stringRedisTemplate.opsForSet().isMember(
+                RedisConstantsUtils.userLoginUUIDKey(token.handler()),
+                token.loginUUID());
+        if(BooleanUtils.isNotTrue(hasUUID)) {
+            // User is not logged in. (Incorrect loginUUID)
+            log.info("User {} loginUUID is incorrect.", token.handler());
+            return true;
+        }
+
+        // User is logged in.
+        String userJson = stringRedisTemplate.opsForValue().get(
+                RedisConstantsUtils.userInfoKey(token.handler()));
         UserDTO user = JsonUtils.fromJson(userJson, UserDTO.class);
+        if(Objects.isNull(user)) {
+            throw new AuthSystemException();
+        }
+        user.setLoginUUID(token.loginUUID());
 
         // Set user info to UserContext.
-        UserContext.setUser(user, token);
+        UserContext.set(user);
         // Refresh token expire time.
         stringRedisTemplate.expire(
-                RedisConstantsUtils.userLoginKey(token),
+                RedisConstantsUtils.userLoginUUIDKey(token.handler()),
+                RedisConstantsUtils.USER_LOGIN_EXPIRE_TIME);
+        stringRedisTemplate.expire(
+                RedisConstantsUtils.userInfoKey(token.handler()),
                 RedisConstantsUtils.USER_LOGIN_EXPIRE_TIME);
 
         return true;
@@ -70,7 +93,7 @@ public class UserAccessInterceptor implements HandlerInterceptor {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull Object handler, Exception ex) {
-        UserContext.removeUser();
+        UserContext.remove();
     }
 
     private Optional<String> extractToken(HttpServletRequest request) {

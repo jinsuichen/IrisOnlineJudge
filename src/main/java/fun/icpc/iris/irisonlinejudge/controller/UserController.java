@@ -22,6 +22,11 @@ public class UserController {
         return userService.logout();
     }
 
+    @PostMapping("/logoutAll")
+    public IrisMessage<Boolean> logoutAll() {
+        return userService.logoutAll();
+    }
+
     @PostMapping("/password")
     public IrisMessage<Boolean> changePassword(@RequestBody ChangePasswordRequest request) {
         return userService.changePassword(request.oldPassword(), request.newPassword());

@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             @NonNull HttpServletResponse response,
             @NonNull Object handler){
 
-        if(Objects.isNull(UserContext.getUser())) {
+        if(Objects.isNull(UserContext.get())) {
             // The user is not logged in. Set status 401.
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;

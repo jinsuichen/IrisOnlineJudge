@@ -15,7 +15,7 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/user/register")
-    public IrisMessage<Boolean> register(@RequestBody RegisterRequest request) {
+    public IrisMessage<String> register(@RequestBody RegisterRequest request) {
         return userService.register(
                 request.handle(),
                 request.nickName(),

@@ -15,11 +15,15 @@ public class RedisConstantsUtils {
      * @param token The token of the user.
      * @return The key of the user's login information.
      */
-    public static String userLoginKey(String token) {
-        return "iris:user:login:" + token;
+    public static String userLoginUUIDKey(String token) {
+        return "iris:user:login:uuid:" + token;
     }
 
     public static String userSaltKey(String handle) {
-        return "iris:user:salt:" + handle;
+        return "iris:user:login:salt:" + handle;
+    }
+
+    public static String userInfoKey(String handle) {
+        return "iris:user:login:info:" + handle;
     }
 }

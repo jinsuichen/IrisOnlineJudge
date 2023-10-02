@@ -10,6 +10,7 @@ import fun.icpc.iris.irisonlinejudge.domain.converter.UserConverter;
 import fun.icpc.iris.irisonlinejudge.domain.dto.UserDTO;
 import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
 import fun.icpc.iris.irisonlinejudge.domain.enums.RoleTypeEnum;
+import fun.icpc.iris.irisonlinejudge.domain.record.LoginToken;
 import fun.icpc.iris.irisonlinejudge.repo.UserRepository;
 import fun.icpc.iris.irisonlinejudge.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @SneakyThrows
     @Override
     @Transactional
-    public IrisMessage<Boolean> register(String handle, String nickName, String password) {
+    public IrisMessage<String> register(String handle, String nickName, String password) {
         if(userRepository.existsByHandle(handle)) {
             return IrisMessageFactory.fail("Handle already exists.");
         }
@@ -63,13 +65,23 @@ public class UserServiceImpl implements UserService {
         user = userRepository.save(user);
 
         // Save user to redis.
-        String token = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString();
+        UserDTO userDTO = userConverter.toDTO(user);
+        userDTO.setLoginUUID(uuid);
+
         stringRedisTemplate.opsForValue().set(
-                RedisConstantsUtils.userLoginKey(token),
-                JsonUtils.toJson(user),
+                RedisConstantsUtils.userInfoKey(handle),
+                JsonUtils.toJson(userDTO),
+                RedisConstantsUtils.USER_LOGIN_EXPIRE_TIME);
+        stringRedisTemplate.opsForSet().add(
+                RedisConstantsUtils.userLoginUUIDKey(handle),
+                uuid);
+        stringRedisTemplate.expire(
+                RedisConstantsUtils.userLoginUUIDKey(handle),
                 RedisConstantsUtils.USER_LOGIN_EXPIRE_TIME);
 
-        return IrisMessageFactory.success(true);
+        LoginToken loginToken = new LoginToken(handle, uuid);
+        return IrisMessageFactory.success(loginToken.getContent());
     }
 
     @SneakyThrows
@@ -93,32 +105,58 @@ public class UserServiceImpl implements UserService {
         }
 
         // Save user to redis.
-        String token = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString();
+        UserDTO userDTO = userConverter.toDTO(user);
+        userDTO.setLoginUUID(uuid);
+
         stringRedisTemplate.opsForValue().set(
-                RedisConstantsUtils.userLoginKey(token),
-                JsonUtils.toJson(user),
+                RedisConstantsUtils.userInfoKey(handle),
+                JsonUtils.toJson(userDTO),
+                RedisConstantsUtils.USER_LOGIN_EXPIRE_TIME);
+        stringRedisTemplate.opsForSet().add(
+                RedisConstantsUtils.userLoginUUIDKey(handle),
+                uuid);
+        stringRedisTemplate.expire(
+                RedisConstantsUtils.userLoginUUIDKey(handle),
                 RedisConstantsUtils.USER_LOGIN_EXPIRE_TIME);
 
-        return IrisMessageFactory.success(token);
+        LoginToken loginToken = new LoginToken(handle, uuid);
+        return IrisMessageFactory.success(loginToken.getContent());
     }
 
     @Override
     public IrisMessage<Boolean> logout() {
-        String userToken = UserContext.getUserToken();
-        stringRedisTemplate.delete(RedisConstantsUtils.userLoginKey(userToken));
+        UserDTO userDTO = UserContext.get();
+        stringRedisTemplate.opsForSet().remove(
+                RedisConstantsUtils.userLoginUUIDKey(userDTO.getHandle()),
+                userDTO.getLoginUUID());
+        stringRedisTemplate.delete(
+                RedisConstantsUtils.userInfoKey(userDTO.getHandle()));
+
+        return IrisMessageFactory.success(true);
+    }
+
+    @Override
+    public IrisMessage<Boolean> logoutAll() {
+        UserDTO userDTO = UserContext.get();
+        stringRedisTemplate.delete(
+                RedisConstantsUtils.userLoginUUIDKey(userDTO.getHandle()));
+        stringRedisTemplate.delete(
+                RedisConstantsUtils.userInfoKey(userDTO.getHandle()));
+
         return IrisMessageFactory.success(true);
     }
 
     @Override
     public IrisMessage<Boolean> checkLogin() {
-        String userToken = UserContext.getUserToken();
-        Boolean exist = stringRedisTemplate.hasKey(RedisConstantsUtils.userLoginKey(userToken));
+        UserDTO userDTO = UserContext.get();
+        Boolean exist = Objects.nonNull(userDTO);
         return IrisMessageFactory.success(exist);
     }
 
     @Override
     public IrisMessage<Boolean> changePassword(String oldPassword, String newPassword) {
-        UserDTO userDTO = UserContext.getUser();
+        UserDTO userDTO = UserContext.get();
         UserEntity entity = userConverter.toEntity(userDTO);
 
         // Check old password.
@@ -132,12 +170,15 @@ public class UserServiceImpl implements UserService {
         entity.setPassword(hashNewPassword);
         userRepository.save(entity);
 
+        // Logout all.
+        logoutAll();
+
         return IrisMessageFactory.success(true);
     }
 
     @Override
     public IrisMessage<Boolean> changeNickName(String newNickName) {
-        UserEntity userEntity = userConverter.toEntity(UserContext.getUser());
+        UserEntity userEntity = userConverter.toEntity(UserContext.get());
         userEntity.setNickName(newNickName);
         userRepository.save(userEntity);
 
@@ -165,7 +206,8 @@ public class UserServiceImpl implements UserService {
 
     private String hashPasswordWithRedisSalt(String password, String handle) {
         // Get salt from Redis.
-        String saltBytesStr = stringRedisTemplate.opsForValue().get(RedisConstantsUtils.userSaltKey(handle));
+        String saltBytesStr = stringRedisTemplate.opsForValue().get(
+                RedisConstantsUtils.userSaltKey(handle));
         if(StringUtils.isEmpty(saltBytesStr)) {
             log.warn("Salt not found.");
             throw new SystemException("Salt not found.");

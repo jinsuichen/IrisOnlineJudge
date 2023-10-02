@@ -17,4 +17,6 @@ public class UserDTO {
     private String nickname;
 
     private RoleTypeEnum role;
+
+    private String loginUUID;
 }

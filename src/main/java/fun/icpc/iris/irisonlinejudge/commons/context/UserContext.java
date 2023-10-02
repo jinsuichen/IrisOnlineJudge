@@ -6,24 +6,16 @@ public class UserContext {
 
     public static final ThreadLocal<UserDTO> USER = new ThreadLocal<>();
 
-    public static final ThreadLocal<String> USER_TOKEN = new ThreadLocal<>();
-
-    public static void setUser(UserDTO user, String token) {
+    public static void set(UserDTO user) {
         USER.set(user);
-        USER_TOKEN.set(token);
     }
 
-    public static void removeUser() {
+    public static void remove() {
         USER.remove();
-        USER_TOKEN.remove();
     }
 
-    public static UserDTO getUser() {
+    public static UserDTO get() {
         return USER.get();
-    }
-
-    public static String getUserToken() {
-        return USER_TOKEN.get();
     }
 
 }
