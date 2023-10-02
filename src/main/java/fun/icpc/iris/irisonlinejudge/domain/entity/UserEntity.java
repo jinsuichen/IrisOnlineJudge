@@ -71,7 +71,7 @@ public class UserEntity {
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private LocalDateTime unfreezeTime = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+    private LocalDateTime unfreezeTime;
 
     /**
      * When the problem is created, set the created time and the last updated time to the current time.
@@ -80,6 +80,7 @@ public class UserEntity {
     protected void onCreate() {
         this.gmtCreated = LocalDateTime.now();
         this.gmtModified = LocalDateTime.now();
+        this.unfreezeTime = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
     }
 
     /**
