@@ -1,6 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.controller;
 
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
+import fun.icpc.iris.irisonlinejudge.domain.record.ChangePasswordRequest;
 import fun.icpc.iris.irisonlinejudge.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,8 @@ public class UserController {
     }
 
     @PostMapping("/password")
-    public IrisMessage<Boolean> changePassword(
-            @RequestBody String oldPassword,
-            @RequestBody String newPassword) {
-        return userService.changePassword(oldPassword, newPassword);
+    public IrisMessage<Boolean> changePassword(@RequestBody ChangePasswordRequest request) {
+        return userService.changePassword(request.oldPassword(), request.newPassword());
     }
 
     @PostMapping("/nickName")
