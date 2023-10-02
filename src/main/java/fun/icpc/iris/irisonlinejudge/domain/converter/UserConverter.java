@@ -21,7 +21,7 @@ public class UserConverter {
     public UserDTO toDTO(UserEntity userEntity) {
         return UserDTO.builder()
                 .handle(userEntity.getHandle())
-                .nickname(userEntity.getNickname())
+                .nickname(userEntity.getNickName())
                 .role(userEntity.getRole())
                 .build();
     }

@@ -5,12 +5,15 @@ import fun.icpc.iris.irisonlinejudge.commons.context.UserContext;
 import fun.icpc.iris.irisonlinejudge.commons.util.AuthorizationUtils;
 import fun.icpc.iris.irisonlinejudge.commons.util.JsonUtils;
 import fun.icpc.iris.irisonlinejudge.commons.util.RedisConstantsUtils;
+import fun.icpc.iris.irisonlinejudge.domain.converter.UserConverter;
 import fun.icpc.iris.irisonlinejudge.domain.dto.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Objects;
@@ -22,13 +25,13 @@ import java.util.Optional;
  * 2. Set user info to UserContext.
  */
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class UserAccessInterceptor implements HandlerInterceptor {
 
     private final StringRedisTemplate stringRedisTemplate;
 
-    public UserAccessInterceptor(StringRedisTemplate stringRedisTemplate) {
-        this.stringRedisTemplate = stringRedisTemplate;
-    }
+    private final UserConverter userConverter;
 
     @Override
     public boolean preHandle(
@@ -52,7 +55,7 @@ public class UserAccessInterceptor implements HandlerInterceptor {
         UserDTO user = JsonUtils.fromJson(userJson, UserDTO.class);
 
         // Set user info to UserContext.
-        UserContext.setUser(user);
+        UserContext.setUser(user, token);
         // Refresh token expire time.
         stringRedisTemplate.expire(
                 RedisConstantsUtils.userLoginKey(token),

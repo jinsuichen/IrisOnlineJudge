@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Objects;
@@ -13,6 +14,7 @@ import java.util.Objects;
  * For requests that require user authentication,
  * check whether the user is logged in.
  */
+@Component
 @RequiredArgsConstructor
 public class LoginInterceptor implements HandlerInterceptor {
 

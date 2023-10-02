@@ -4,7 +4,6 @@ import fun.icpc.iris.irisonlinejudge.controller.interceptor.LoginInterceptor;
 import fun.icpc.iris.irisonlinejudge.controller.interceptor.UserAccessInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,15 +13,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private final StringRedisTemplate stringRedisTemplate;
+    private final UserAccessInterceptor userAccessInterceptor;
+    private final LoginInterceptor loginInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new UserAccessInterceptor(stringRedisTemplate))
+        registry.addInterceptor(userAccessInterceptor)
                 .addPathPatterns("/**")
                 .order(0);
 
-        registry.addInterceptor(new LoginInterceptor())
+        registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/**/auth/register", "/api/**/auth/login")
                 .order(1);

@@ -52,7 +52,7 @@ public class UserEntity {
      * The nickname of the user.
      */
     @Column(nullable = false, length = 50)
-    private String nickname;
+    private String nickName;
 
     /**
      * The password of the user.
@@ -65,6 +65,13 @@ public class UserEntity {
      */
     @Enumerated(EnumType.STRING)
     private RoleTypeEnum role;
+
+    /**
+     * unfreeze time
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, columnDefinition = "1970-01-01 00:00:00")
+    private LocalDateTime unfreezeTime;
 
     /**
      * When the problem is created, set the created time and the last updated time to the current time.
