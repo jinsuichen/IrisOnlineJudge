@@ -39,7 +39,7 @@ public class AuthenticationController {
                 request.password());
     }
 
-    @GetMapping("/login")
+    @GetMapping("/user/login")
     public IrisMessage<Boolean> checkLogin() {
         return userService.checkLogin();
     }
