@@ -1,18 +1,19 @@
 package fun.icpc.iris.irisonlinejudge.commons.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class JsonUtils {
 
-    public static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Gson gson = new GsonBuilder().create();
 
-    public static String toJson(Object obj) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(obj);
+    // 将对象转换为 JSON 字符串
+    public static String toJson(Object obj) {
+        return gson.toJson(obj);
     }
 
-    public static <T> T fromJson(String json, Class<T> clazz) throws JsonProcessingException {
-        return objectMapper.readValue(json, clazz);
+    // 将 JSON 字符串转换为对象
+    public static <T> T fromJson(String json, Class<T> classOfT) {
+        return gson.fromJson(json, classOfT);
     }
-
 }
