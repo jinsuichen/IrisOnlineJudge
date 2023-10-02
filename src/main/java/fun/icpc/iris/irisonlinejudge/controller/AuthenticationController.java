@@ -5,10 +5,7 @@ import fun.icpc.iris.irisonlinejudge.domain.record.LoginRequest;
 import fun.icpc.iris.irisonlinejudge.domain.record.RegisterRequest;
 import fun.icpc.iris.irisonlinejudge.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -31,4 +28,10 @@ public class AuthenticationController {
                 request.handle(),
                 request.password());
     }
+
+    @GetMapping("/login")
+    public IrisMessage<Boolean> checkLogin() {
+        return userService.checkLogin();
+    }
+
 }
