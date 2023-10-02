@@ -70,8 +70,8 @@ public class UserEntity {
      * unfreeze time
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, columnDefinition = "1970-01-01 00:00:00")
-    private LocalDateTime unfreezeTime;
+    @Column(nullable = false)
+    private LocalDateTime unfreezeTime = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
 
     /**
      * When the problem is created, set the created time and the last updated time to the current time.
