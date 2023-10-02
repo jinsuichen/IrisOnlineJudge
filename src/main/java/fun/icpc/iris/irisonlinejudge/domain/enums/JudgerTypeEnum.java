@@ -13,7 +13,7 @@ public enum JudgerTypeEnum {
     /**
      * character by character judge.
      */
-    FORMER("CHARACTER_BY_CHARACTER_JUDGE") {
+    EXACT("CHARACTER_BY_CHARACTER_JUDGE") {
         @Override
         public boolean isAccepted(String output, String answer) {
             return output.equals(answer);
@@ -33,7 +33,7 @@ public enum JudgerTypeEnum {
     /**
      * ignore whitespace and newline judge.
      */
-    STANDARD("IGNORE_WHITESPACE_AND_NEWLINE_JUDGE") {
+    WHITESPACE_IGNORING("IGNORE_WHITESPACE_AND_NEWLINE_JUDGE") {
         @Override
         public boolean isAccepted(String output, String answer) {
             return removeBlankCharacters(output).equals(removeBlankCharacters(answer));

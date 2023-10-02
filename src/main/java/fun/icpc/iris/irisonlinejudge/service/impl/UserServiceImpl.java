@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
                 .handle(handle)
                 .nickName(nickName)
                 .password(hashPassword)
-                .role(RoleTypeEnum.USER)
+                .role(RoleTypeEnum.CONTESTANT)
                 .build();
         user = userRepository.save(user);
 
