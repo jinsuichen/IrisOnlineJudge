@@ -45,13 +45,13 @@ public class UserEntity {
     /**
      * The handle of the user.
      */
-    @Column(unique = true, nullable = false, length = 50)
+    @Column(unique = true, nullable = false, length = 200)
     private String handle;
 
     /**
      * The nickname of the user.
      */
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 200)
     private String nickName;
 
     /**
