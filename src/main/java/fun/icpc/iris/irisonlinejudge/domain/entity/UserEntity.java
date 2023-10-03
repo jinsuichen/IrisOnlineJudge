@@ -3,6 +3,8 @@ package fun.icpc.iris.irisonlinejudge.domain.entity;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.GroupUserMapping;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TeamUserMapping;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TenantUserMapping;
+import fun.icpc.iris.irisonlinejudge.domain.enums.CountryAndRegionTypeEnum;
+import fun.icpc.iris.irisonlinejudge.domain.enums.GenderTypeEnum;
 import fun.icpc.iris.irisonlinejudge.domain.enums.UserRoleTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -85,6 +87,49 @@ public class UserEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private LocalDateTime unfreezeTime;
+
+    /**
+     * The email of the user.
+     */
+    @Column(length = 200)
+    private String email;
+
+    /**
+     * The bio of the user.
+     */
+    @Column(columnDefinition = "TEXT")
+    private String bio;
+
+    /**
+     * The avatar of the user.
+     */
+    @Column(columnDefinition = "TEXT")
+    private String avatar;
+
+    /**
+     * The gender of the user.
+     */
+    @Column(length = 80)
+    private GenderTypeEnum gender;
+
+    /**
+     * The birthday of the user.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private LocalDateTime birthday;
+
+    /**
+     * The country and region of the user.
+     */
+    @Column(columnDefinition = "TEXT")
+    private CountryAndRegionTypeEnum countryAndRegion;
+
+    /**
+     * The organization of the user.
+     */
+    @Column(length = 200)
+    private String organization;
 
     @PrePersist
     protected void onCreate() {
