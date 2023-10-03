@@ -2,7 +2,7 @@ package fun.icpc.iris.irisonlinejudge.domain.entity.mapping;
 
 import fun.icpc.iris.irisonlinejudge.domain.entity.TenantEntity;
 import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
-import fun.icpc.iris.irisonlinejudge.domain.enums.RoleTypeEnum;
+import fun.icpc.iris.irisonlinejudge.domain.enums.TenantAuthTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,7 +50,7 @@ public class TenantUserMapping {
      * The role of the user in the tenant.
      */
     @Column(nullable = false)
-    private RoleTypeEnum role;
+    private TenantAuthTypeEnum role;
 
     @PrePersist
     protected void onCreate() {

@@ -3,7 +3,7 @@ package fun.icpc.iris.irisonlinejudge.domain.entity;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.GroupUserMapping;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TeamUserMapping;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TenantUserMapping;
-import fun.icpc.iris.irisonlinejudge.domain.enums.RoleTypeEnum;
+import fun.icpc.iris.irisonlinejudge.domain.enums.UserRoleTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -56,10 +56,10 @@ public class UserEntity {
     private String password;
 
     /**
-     * The role of the user.
+     * The role of the user in global scope.
      */
     @Enumerated(EnumType.STRING)
-    private RoleTypeEnum role;
+    private UserRoleTypeEnum role;
 
     /**
      * The associated tenants

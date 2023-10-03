@@ -9,7 +9,7 @@ import fun.icpc.iris.irisonlinejudge.commons.util.RedisConstantsUtils;
 import fun.icpc.iris.irisonlinejudge.domain.converter.UserConverter;
 import fun.icpc.iris.irisonlinejudge.domain.dto.UserDTO;
 import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
-import fun.icpc.iris.irisonlinejudge.domain.enums.RoleTypeEnum;
+import fun.icpc.iris.irisonlinejudge.domain.enums.UserRoleTypeEnum;
 import fun.icpc.iris.irisonlinejudge.domain.record.LoginToken;
 import fun.icpc.iris.irisonlinejudge.repo.UserRepository;
 import fun.icpc.iris.irisonlinejudge.service.UserService;
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
                 .handle(handle)
                 .nickName(nickName)
                 .password(hashPassword)
-                .role(RoleTypeEnum.CONTESTANT)
+                .role(UserRoleTypeEnum.USER)
                 .build();
         user = userRepository.save(user);
 
