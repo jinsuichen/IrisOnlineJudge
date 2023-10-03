@@ -1,7 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity.mapping;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.GroupEntity;
 import fun.icpc.iris.irisonlinejudge.domain.entity.TeamEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "mp_group_team")
-public class GroupTeamMapping {
+@Table(name = "mp_team_user")
+public class MpTeamUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class GroupTeamMapping {
     @Column(nullable = false)
     private LocalDateTime gmtModified;
 
-/**
+    /**
      * The associated team.
      */
     @ManyToOne(fetch = FetchType.EAGER)
@@ -33,11 +33,11 @@ public class GroupTeamMapping {
     private TeamEntity team;
 
     /**
-     * The associated group.
+     * The associated user.
      */
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_id", nullable = false)
-    private GroupEntity group;
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     @PrePersist
     protected void onCreate() {

@@ -1,6 +1,6 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TenantProblemMapping;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantProblem;
 import fun.icpc.iris.irisonlinejudge.domain.enums.JudgerTypeEnum;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -69,7 +69,7 @@ public class ProblemEntity {
      * The associated tenants.
      */
     @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
-    private List<TenantProblemMapping> tenants;
+    private List<MpTenantProblem> tenants;
 
     @PrePersist
     protected void onCreate() {

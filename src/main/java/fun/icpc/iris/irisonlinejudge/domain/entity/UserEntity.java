@@ -1,11 +1,11 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.GroupUserMapping;
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TeamUserMapping;
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TenantUserMapping;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpGroupUser;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTeamUser;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantUser;
 import fun.icpc.iris.irisonlinejudge.domain.enums.CountryAndRegionTypeEnum;
 import fun.icpc.iris.irisonlinejudge.domain.enums.GenderTypeEnum;
-import fun.icpc.iris.irisonlinejudge.domain.enums.UserRoleTypeEnum;
+import fun.icpc.iris.irisonlinejudge.domain.enums.GlobalUserRoleTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -61,25 +61,25 @@ public class UserEntity {
      * The role of the user in global scope.
      */
     @Enumerated(EnumType.STRING)
-    private UserRoleTypeEnum role;
+    private GlobalUserRoleTypeEnum role;
 
     /**
      * The associated tenants
      */
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<TenantUserMapping> tenantUserMappings;
+    private Set<MpTenantUser> mpTenantUsers;
 
     /**
      * The associated teams.
      */
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<TeamUserMapping> teamUserMappings;
+    private Set<MpTeamUser> mpTeamUsers;
 
     /**
      * The associated groups.
      */
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<GroupUserMapping> groupUserMappings;
+    private Set<MpGroupUser> mpGroupUsers;
 
     /**
      * unfreeze time

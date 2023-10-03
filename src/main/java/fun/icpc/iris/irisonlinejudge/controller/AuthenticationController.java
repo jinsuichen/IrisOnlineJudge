@@ -5,7 +5,7 @@ import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessageFactory;
 import fun.icpc.iris.irisonlinejudge.domain.record.LoginRequest;
 import fun.icpc.iris.irisonlinejudge.domain.record.RegisterRequest;
-import fun.icpc.iris.irisonlinejudge.service.UserService;
+import fun.icpc.iris.irisonlinejudge.service.UserApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final UserService userService;
+    private final UserApplicationService userApplicationService;
 
     @PostMapping("/user/register")
     public IrisMessage<String> register(@RequestBody RegisterRequest request) {
@@ -22,7 +22,7 @@ public class AuthenticationController {
             return IrisMessageFactory.fail("Invalid register request.");
         }
 
-        return userService.register(
+        return userApplicationService.register(
                 request.handle(),
                 request.nickName(),
                 request.password());
@@ -34,14 +34,14 @@ public class AuthenticationController {
             return IrisMessageFactory.fail("Invalid register request.");
         }
 
-        return userService.login(
+        return userApplicationService.login(
                 request.handle(),
                 request.password());
     }
 
     @GetMapping("/user/login")
     public IrisMessage<Boolean> checkLogin() {
-        return userService.checkLogin();
+        return userApplicationService.checkLogin();
     }
 
 }

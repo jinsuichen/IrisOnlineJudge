@@ -2,7 +2,7 @@ package fun.icpc.iris.irisonlinejudge.service;
 
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
 
-public interface UserService {
+public interface UserApplicationService {
 
     /**
      * Register a new user.
@@ -55,20 +55,5 @@ public interface UserService {
      */
     IrisMessage<Boolean> changePassword(String oldPassword, String newPassword);
 
-    /**
-     * Change the nickname of the user.
-     *
-     * @param newNickName The new nickname of the user.
-     * @return If change nickname successfully, return true, else return false.
-     */
-    IrisMessage<Boolean> changeNickName(String newNickName);
-
-    /**
-     * Change the avatar of the user.
-     *
-     * @param newAvatar The new avatar of the user.
-     * @return If change avatar successfully, return true, else return false.
-     */
-    IrisMessage<Boolean> changeAvatar(String newAvatar);
 
 }

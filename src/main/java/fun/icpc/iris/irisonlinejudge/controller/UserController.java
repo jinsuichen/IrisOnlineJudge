@@ -5,7 +5,8 @@ import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessageFactory;
 import fun.icpc.iris.irisonlinejudge.domain.record.ChangeNickNameRequest;
 import fun.icpc.iris.irisonlinejudge.domain.record.ChangePasswordRequest;
-import fun.icpc.iris.irisonlinejudge.service.UserService;
+import fun.icpc.iris.irisonlinejudge.service.UserApplicationService;
+import fun.icpc.iris.irisonlinejudge.service.UserDomainService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,16 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserApplicationService userApplicationService;
+
+    private final UserDomainService userDomainService;
 
     @PostMapping("/logout")
     public IrisMessage<Boolean> logout() {
-        return userService.logout();
+        return userApplicationService.logout();
     }
 
     @PostMapping("/logoutAll")
     public IrisMessage<Boolean> logoutAll() {
-        return userService.logoutAll();
+        return userApplicationService.logoutAll();
     }
 
     @PostMapping("/password")
@@ -41,7 +44,7 @@ public class UserController {
             return IrisMessageFactory.fail("The new password cannot be the same as the old password.");
         }
 
-        return userService.changePassword(request.oldPassword(), request.newPassword());
+        return userApplicationService.changePassword(request.oldPassword(), request.newPassword());
     }
 
     @PostMapping("/nickName")
@@ -50,6 +53,6 @@ public class UserController {
             return IrisMessageFactory.fail("Invalid nickname.");
         }
 
-        return userService.changeNickName(request.nickName());
+        return userDomainService.changeNickName(request.nickName());
     }
 }

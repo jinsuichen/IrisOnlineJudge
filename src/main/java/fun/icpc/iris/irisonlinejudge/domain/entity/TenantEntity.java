@@ -1,7 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TenantProblemMapping;
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TenantUserMapping;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantProblem;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -61,7 +61,7 @@ public class TenantEntity {
      * The associated users.
      */
     @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY)
-    private Set<TenantUserMapping> users = new HashSet<>();
+    private Set<MpTenantUser> users = new HashSet<>();
 
     /**
      * The associated groups.
@@ -73,7 +73,7 @@ public class TenantEntity {
      * The associated problems.
      */
     @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY)
-    private Set<TenantProblemMapping> problems = new HashSet<>();
+    private Set<MpTenantProblem> problems = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

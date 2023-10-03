@@ -1,7 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.GroupTeamMapping;
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TeamUserMapping;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpGroupTeam;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTeamUser;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -43,13 +43,13 @@ public class TeamEntity {
      * The associated users.
      */
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<TeamUserMapping> users = new HashSet<>();
+    private Set<MpTeamUser> users = new HashSet<>();
 
     /**
      * The associated groups.
      */
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<GroupTeamMapping> groups = new HashSet<>();
+    private Set<MpGroupTeam> groups = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

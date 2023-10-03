@@ -9,10 +9,10 @@ import fun.icpc.iris.irisonlinejudge.commons.util.RedisConstantsUtils;
 import fun.icpc.iris.irisonlinejudge.domain.converter.UserConverter;
 import fun.icpc.iris.irisonlinejudge.domain.dto.UserDTO;
 import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
-import fun.icpc.iris.irisonlinejudge.domain.enums.UserRoleTypeEnum;
+import fun.icpc.iris.irisonlinejudge.domain.enums.GlobalUserRoleTypeEnum;
 import fun.icpc.iris.irisonlinejudge.domain.record.LoginToken;
 import fun.icpc.iris.irisonlinejudge.repo.UserRepository;
-import fun.icpc.iris.irisonlinejudge.service.UserService;
+import fun.icpc.iris.irisonlinejudge.service.UserApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ import static org.apache.commons.codec.digest.DigestUtils.md5;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserApplicationServiceImpl implements UserApplicationService {
 
     private final UserRepository userRepository;
     private final StringRedisTemplate stringRedisTemplate;
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
                 .handle(handle)
                 .nickName(nickName)
                 .password(hashPassword)
-                .role(UserRoleTypeEnum.USER)
+                .role(GlobalUserRoleTypeEnum.USER)
                 .build();
         user = userRepository.save(user);
 
@@ -176,19 +176,7 @@ public class UserServiceImpl implements UserService {
         return IrisMessageFactory.success(true);
     }
 
-    @Override
-    public IrisMessage<Boolean> changeNickName(String newNickName) {
-        UserEntity userEntity = userConverter.toEntity(UserContext.get());
-        userEntity.setNickName(newNickName);
-        userRepository.save(userEntity);
 
-        return IrisMessageFactory.success(true);
-    }
-
-    @Override
-    public IrisMessage<Boolean> changeAvatar(String newAvatar) {
-        return null;
-    }
 
 
     private String hashPasswordWithRandSalt(String password, String handle) {

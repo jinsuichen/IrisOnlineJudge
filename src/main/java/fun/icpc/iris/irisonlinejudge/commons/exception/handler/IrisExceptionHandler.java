@@ -1,8 +1,10 @@
 package fun.icpc.iris.irisonlinejudge.commons.exception.handler;
 
 import fun.icpc.iris.irisonlinejudge.commons.exception.BaseIrisException;
+import fun.icpc.iris.irisonlinejudge.commons.exception.irisexception.NoAuthException;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessageFactory;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +24,19 @@ public class IrisExceptionHandler {
     @ExceptionHandler(BaseIrisException.class)
     public ResponseEntity<IrisMessage<Void>> handleIrisBaseException(BaseIrisException e) {
         return ResponseEntity.badRequest().body(IrisMessageFactory.fail(e.getMessage()));
+    }
+
+    /**
+     * Handle NoAuthException.
+     * Set the status code to 401.
+     *
+     * @param e the NoAuthException
+     * @return the Iris response
+     */
+    @ExceptionHandler(NoAuthException.class)
+    public ResponseEntity<IrisMessage<Void>> handleNoAuthException(NoAuthException e) {
+        return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED)
+                .body(IrisMessageFactory.fail(e.getMessage()));
     }
 
 }
