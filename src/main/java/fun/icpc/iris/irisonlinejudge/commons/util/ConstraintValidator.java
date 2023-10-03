@@ -9,15 +9,15 @@ public class ConstraintValidator {
     /**
      * The regex for handle.
      * Only lowercase letters, numbers and underscores are allowed.
-     * The length must be between 8 and 20.
+     * The length must be between 1 and 20.
      */
-    public static final String HANDLE_REGEX = "^[a-z0-9_]{8,20}$";
+    public static final String HANDLE_REGEX = "^[a-z0-9_]{1,20}$";
 
     /**
      * The message for handle regex.
      */
     public static final String HANDLE_REGEX_MESSAGE = "The handle can only contain lowercase letters, numbers and " +
-            "underscores, and the length must be between 8 and 20.";
+            "underscores, and the length must be between 1 and 20.";
 
     /**
      * The regex for password.

@@ -14,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -50,5 +52,16 @@ public class UserDomainServiceImpl implements UserDomainService {
     @Override
     public IrisMessage<List<TenantUserRoleTypeEnum>> getTenantUserRole(Long handle, Long tenantId) {
         return mpTenantUserDomainService.getTenantUserRole(handle, tenantId);
+    }
+
+    @Override
+    public IrisMessage<Void> updateUnfreezeTime(Long userId, LocalDateTime unfreezeTime) {
+        UserEntity userEntity = userRepository.findById(userId).orElse(null);
+        if(Objects.isNull(userEntity)) {
+            return IrisMessageFactory.fail("User not found.");
+        }
+        userEntity.setUnfreezeTime(unfreezeTime);
+        userRepository.save(userEntity);
+        return IrisMessageFactory.success();
     }
 }
