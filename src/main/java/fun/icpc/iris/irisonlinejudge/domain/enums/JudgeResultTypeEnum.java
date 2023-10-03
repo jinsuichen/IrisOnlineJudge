@@ -1,6 +1,10 @@
 package fun.icpc.iris.irisonlinejudge.domain.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
+@AllArgsConstructor
 public enum JudgeResultTypeEnum {
 
     ACCEPT(0, "Accepted"),
@@ -28,11 +32,6 @@ public enum JudgeResultTypeEnum {
     private final int code;
     private final String message;
 
-    JudgeResultTypeEnum(int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
     public static JudgeResultTypeEnum fromCode(int code) {
         for (JudgeResultTypeEnum value : JudgeResultTypeEnum.values()) {
             if (value.code == code) {
@@ -40,13 +39,5 @@ public enum JudgeResultTypeEnum {
             }
         }
         return null;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
     }
 }

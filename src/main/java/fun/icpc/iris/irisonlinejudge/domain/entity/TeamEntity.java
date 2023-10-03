@@ -1,17 +1,18 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpGroupTeam;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTeamUser;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * The test case of a problem.
- */
 @Data
 @Entity
-@Table(name = "tb_testcase")
-public class TestcaseEntity {
+@Table(name = "tb_team")
+public class TeamEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,41 +28,28 @@ public class TestcaseEntity {
     private LocalDateTime gmtModified;
 
     /**
-     * The associated problem.
+     * The name of the team.
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "problem_id", nullable = false)
-    private ProblemEntity problem;
+    @Column(nullable = false, length = 200)
+    private String name;
 
     /**
-     * The input of the test case.
+     * The description of the team.
      */
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String input;
+    private String description;
 
     /**
-     * The output of the test case.
+     * The associated users.
      */
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String output;
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<MpTeamUser> users = new HashSet<>();
 
     /**
-     * The score of the test case.
+     * The associated groups.
      */
-    @Column(nullable = false)
-    private Integer score;
-
-    /**
-     * Is the test case a sample?
-     */
-    @Column(nullable = false)
-    private Boolean isSample;
-
-    /**
-     * Is the test case public?
-     */
-    @Column(nullable = false)
-    private Boolean isPublic;
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<MpGroupTeam> groups = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

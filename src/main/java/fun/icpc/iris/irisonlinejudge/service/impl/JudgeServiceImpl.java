@@ -5,7 +5,7 @@ import com.github.dockerjava.api.command.CopyArchiveFromContainerCmd;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
-import fun.icpc.iris.irisonlinejudge.commons.exception.SandboxRunnerException;
+import fun.icpc.iris.irisonlinejudge.commons.exception.irisexception.SandboxRunnerException;
 import fun.icpc.iris.irisonlinejudge.commons.util.TarUtils;
 import fun.icpc.iris.irisonlinejudge.domain.enums.ExecCommandTypeEnum;
 import fun.icpc.iris.irisonlinejudge.domain.record.RunningResult;
@@ -59,7 +59,7 @@ public class JudgeServiceImpl implements JudgeService {
                 () -> runDocker(stdInputContent, codeContent, containerId, execCommandTypeEnum, timeLimit)
         );
 
-        final long mostWaitTime = timeLimit * 2000;
+        final long mostWaitTime = timeLimit * 2;
 
         try {
             return runningResultFuture.get(mostWaitTime, TimeUnit.SECONDS);

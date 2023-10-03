@@ -3,7 +3,7 @@ package fun.icpc.iris.irisonlinejudge.commons.util;
 /**
  * The factory of IrisResponse, which is used to create different IrisResponse.
  */
-public class IrisResponseFactory {
+public class IrisMessageFactory {
     /**
      * Create a successful result.
      *
@@ -11,8 +11,8 @@ public class IrisResponseFactory {
      * @param <T>  The type of data.
      * @return The result.
      */
-    public static <T> IrisResponse<T> success(T data) {
-        return new IrisResponse<>(true, null, data);
+    public static <T> IrisMessage<T> success(T data) {
+        return new IrisMessage<>(true, null, data);
     }
 
     /**
@@ -20,8 +20,8 @@ public class IrisResponseFactory {
      *
      * @return The result.
      */
-    public static IrisResponse<Void> success() {
-        return new IrisResponse<>(true, null, null);
+    public static IrisMessage<Void> success() {
+        return new IrisMessage<>(true, null, null);
     }
 
     /**
@@ -31,7 +31,7 @@ public class IrisResponseFactory {
      * @param <T>     The type of data.
      * @return The result.
      */
-    public static <T> IrisResponse<T> fail(String message) {
-        return new IrisResponse<>(false, message, null);
+    public static <T> IrisMessage<T> fail(String message) {
+        return new IrisMessage<>(false, message, null);
     }
 }

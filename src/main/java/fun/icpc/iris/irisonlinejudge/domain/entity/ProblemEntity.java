@@ -1,9 +1,11 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantProblem;
+import fun.icpc.iris.irisonlinejudge.domain.enums.JudgerTypeEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -11,16 +13,21 @@ import java.util.List;
  */
 @Data
 @Entity
-@Table(name = "problem")
+@Table(name = "tb_problem")
 public class ProblemEntity {
 
-    /**
-     * The id of the problem.
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long problemId;
+    private Long id;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private LocalDateTime gmtCreated;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private LocalDateTime gmtModified;
 
     /**
      * The title of the problem.
@@ -47,32 +54,31 @@ public class ProblemEntity {
     private Long memoryLimit;
 
     /**
-     * The last updated time of the problem.
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date lastUpdatedTime;
-
-    /**
      * The associated test cases.
      */
-    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TestcaseEntity> testcases;
 
     /**
-     * The associated Dockerfile.
+     * The associated judge type.
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "judger_id", nullable = false)
-    private JudgerEntity judger;
+    @Column(nullable = false)
+    private JudgerTypeEnum judgeType;
 
     /**
-     * When the problem is created, set the last updated time to the current time.
+     * The associated tenants.
      */
-    @PreUpdate
-    protected void onUpdate() {
-        this.lastUpdatedTime = new Date();
+    @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
+    private List<MpTenantProblem> tenants;
+
+    @PrePersist
+    protected void onCreate() {
+        this.gmtCreated = LocalDateTime.now();
+        this.gmtModified = LocalDateTime.now();
     }
 
-
+    @PreUpdate
+    protected void onUpdate() {
+        this.gmtModified = LocalDateTime.now();
+    }
 }
