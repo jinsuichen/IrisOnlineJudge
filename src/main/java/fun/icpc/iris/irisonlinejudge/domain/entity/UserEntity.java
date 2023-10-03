@@ -1,5 +1,8 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.GroupUserMapping;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TeamUserMapping;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TenantUserMapping;
 import fun.icpc.iris.irisonlinejudge.domain.enums.RoleTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * The user.
@@ -17,27 +21,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user", indexes = {@Index(name = "idx_user_handle", columnList = "handle", unique = true)})
+@Table(name = "tb_user", indexes = {@Index(name = "idx_user_handle", columnList = "handle", unique = true)})
 public class UserEntity {
 
-    /**
-     * The id of the user.
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
-    /**
-     * The time when the user was created.
-     */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private LocalDateTime gmtCreated;
 
-    /**
-     * The time when the user was modified.
-     */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private LocalDateTime gmtModified;
@@ -67,15 +62,30 @@ public class UserEntity {
     private RoleTypeEnum role;
 
     /**
+     * The associated tenants
+     */
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<TenantUserMapping> tenantUserMappings;
+
+    /**
+     * The associated teams.
+     */
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<TeamUserMapping> teamUserMappings;
+
+    /**
+     * The associated groups.
+     */
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<GroupUserMapping> groupUserMappings;
+
+    /**
      * unfreeze time
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private LocalDateTime unfreezeTime;
 
-    /**
-     * When the problem is created, set the created time and the last updated time to the current time.
-     */
     @PrePersist
     protected void onCreate() {
         this.gmtCreated = LocalDateTime.now();
@@ -83,9 +93,6 @@ public class UserEntity {
         this.unfreezeTime = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
     }
 
-    /**
-     * When the problem is created, set the last updated time to the current time.
-     */
     @PreUpdate
     protected void onUpdate() {
         this.gmtModified = LocalDateTime.now();

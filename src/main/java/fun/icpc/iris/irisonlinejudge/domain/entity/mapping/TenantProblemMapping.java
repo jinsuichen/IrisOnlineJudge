@@ -1,17 +1,16 @@
-package fun.icpc.iris.irisonlinejudge.domain.entity;
+package fun.icpc.iris.irisonlinejudge.domain.entity.mapping;
 
+import fun.icpc.iris.irisonlinejudge.domain.entity.ProblemEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.TenantEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
-/**
- * The test case of a problem.
- */
 @Data
 @Entity
-@Table(name = "tb_testcase")
-public class TestcaseEntity {
+@Table(name = "mp_tenant_problem_mapping")
+public class TenantProblemMapping {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,34 +33,11 @@ public class TestcaseEntity {
     private ProblemEntity problem;
 
     /**
-     * The input of the test case.
+     * The associated tenant.
      */
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String input;
-
-    /**
-     * The output of the test case.
-     */
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String output;
-
-    /**
-     * The score of the test case.
-     */
-    @Column(nullable = false)
-    private Integer score;
-
-    /**
-     * Is the test case a sample?
-     */
-    @Column(nullable = false)
-    private Boolean isSample;
-
-    /**
-     * Is the test case public?
-     */
-    @Column(nullable = false)
-    private Boolean isPublic;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tenant_id", nullable = false)
+    private TenantEntity tenant;
 
     @PrePersist
     protected void onCreate() {

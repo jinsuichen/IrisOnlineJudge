@@ -1,5 +1,6 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.TenantProblemMapping;
 import fun.icpc.iris.irisonlinejudge.domain.enums.JudgerTypeEnum;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,27 +13,18 @@ import java.util.List;
  */
 @Data
 @Entity
-@Table(name = "problem")
+@Table(name = "tb_problem")
 public class ProblemEntity {
 
-    /**
-     * The id of the problem.
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
-    /**
-     * The time when the problem was created.
-     */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private LocalDateTime gmtCreated;
 
-    /**
-     * The time when the problem was modified.
-     */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private LocalDateTime gmtModified;
@@ -64,7 +56,7 @@ public class ProblemEntity {
     /**
      * The associated test cases.
      */
-    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TestcaseEntity> testcases;
 
     /**
@@ -74,17 +66,17 @@ public class ProblemEntity {
     private JudgerTypeEnum judgeType;
 
     /**
-     * When the problem is created, set the created time and the last updated time to the current time.
+     * The associated tenants.
      */
+    @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
+    private List<TenantProblemMapping> tenants;
+
     @PrePersist
     protected void onCreate() {
         this.gmtCreated = LocalDateTime.now();
         this.gmtModified = LocalDateTime.now();
     }
 
-    /**
-     * When the problem is created, set the last updated time to the current time.
-     */
     @PreUpdate
     protected void onUpdate() {
         this.gmtModified = LocalDateTime.now();
