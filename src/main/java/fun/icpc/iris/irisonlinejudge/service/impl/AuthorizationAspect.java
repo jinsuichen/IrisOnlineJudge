@@ -9,6 +9,7 @@ import fun.icpc.iris.irisonlinejudge.domain.enums.GlobalUserRoleTypeEnum;
 import fun.icpc.iris.irisonlinejudge.domain.enums.TenantUserRoleTypeEnum;
 import fun.icpc.iris.irisonlinejudge.service.UserDomainService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -30,14 +31,18 @@ public class AuthorizationAspect {
     @Before("@annotation(authorizationGlobal)")
     public void checkAuthorization(JoinPoint joinPoint, AuthorizationGlobal authorizationGlobal) {
 
+        GlobalUserRoleTypeEnum requiredRole = authorizationGlobal.value();
+        if(Objects.isNull(requiredRole)) {
+            throw new AuthSystemException();
+        }
+
         UserDTO userDTO = UserContext.get();
         if(Objects.isNull(userDTO)) {
             // User not login.
             throw new NoAuthException();
         }
-
-        GlobalUserRoleTypeEnum requiredRole = authorizationGlobal.value();
         GlobalUserRoleTypeEnum role = userDTO.getRole();
+
 
         if (!StringUtils.equals(role.name(), requiredRole.name())) {
             throw new NoAuthException();
@@ -46,13 +51,17 @@ public class AuthorizationAspect {
 
     @Before("@annotation(authorizationTenant)")
     public void checkAuthorization(JoinPoint joinPoint, AuthorizationTenant authorizationTenant) {
+        TenantUserRoleTypeEnum[] requireAuth = authorizationTenant.value();
+        if(ArrayUtils.isEmpty(requireAuth)) {
+            throw new AuthSystemException();
+        }
+
         UserDTO userDTO = UserContext.get();
         if(Objects.isNull(userDTO)) {
             // User not login.
             throw new NoAuthException();
         }
 
-        TenantUserRoleTypeEnum[] requireAuth = authorizationTenant.value();
         String tenantIdParamName = authorizationTenant.tenantIdParam();
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
