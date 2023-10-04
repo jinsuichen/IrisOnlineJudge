@@ -1,7 +1,5 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpGroupTeam;
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTeamUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,13 +15,13 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_team")
-public class TeamEntity {
+@Table(name = "tb_problemtagcatalog")
+public class ProblemTagCatalogEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private Integer id;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -33,29 +31,11 @@ public class TeamEntity {
     @Column(nullable = false)
     private LocalDateTime gmtModified;
 
-    /**
-     * The name of the team.
-     */
-    @Column(nullable = false, length = 200)
+    @Column(unique = true, nullable = false, length = 100)
     private String name;
 
-    /**
-     * The description of the team.
-     */
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String description;
-
-    /**
-     * The associated users.
-     */
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<MpTeamUser> users = new HashSet<>();
-
-    /**
-     * The associated groups.
-     */
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<MpGroupTeam> groups = new HashSet<>();
+    @OneToMany(mappedBy = "catalog", fetch = FetchType.EAGER)
+    private Set<ProblemTagEntity> tags = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

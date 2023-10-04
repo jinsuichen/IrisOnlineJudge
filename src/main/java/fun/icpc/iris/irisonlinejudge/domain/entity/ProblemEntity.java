@@ -1,9 +1,13 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpProblemProblemTag;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantProblem;
 import fun.icpc.iris.irisonlinejudge.domain.enums.JudgerTypeEnum;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +16,9 @@ import java.util.List;
  * The problem.
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_problem")
 public class ProblemEntity {
@@ -70,6 +77,12 @@ public class ProblemEntity {
      */
     @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
     private List<MpTenantProblem> tenants;
+
+    /**
+     * The associated problem tags
+     */
+    @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
+    private List<MpProblemProblemTag> tags;
 
     @PrePersist
     protected void onCreate() {

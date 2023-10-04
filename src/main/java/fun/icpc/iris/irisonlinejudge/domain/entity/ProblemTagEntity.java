@@ -1,7 +1,6 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpGroupTeam;
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpGroupUser;
+import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpProblemProblemTag;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,13 +16,13 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_group")
-public class GroupEntity {
+@Table(name = "tb_problemtag")
+public class ProblemTagEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private Integer id;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -33,36 +32,18 @@ public class GroupEntity {
     @Column(nullable = false)
     private LocalDateTime gmtModified;
 
-    /**
-     * The name of the group.
-     */
-    @Column(nullable = false, length = 200)
+    @Column(unique = true, nullable = false, length = 100)
     private String name;
 
-    /**
-     * The description of the group.
-     */
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String description;
-
-    /**
-     * The associated users.
-     */
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<MpGroupUser> users = new HashSet<>();
-
-    /**
-     * The associated tenants.
-     */
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tenant_id", nullable = false)
-    private TenantEntity tenant;
+    @JoinColumn(name = "catalog_id", nullable = false)
+    private ProblemTagCatalogEntity catalog;
 
     /**
-     * The associated teams.
+     * The associated problems.
      */
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<MpGroupTeam> teams = new HashSet<>();
+    @OneToMany(mappedBy = "problemTag", fetch = FetchType.EAGER)
+    private Set<MpProblemProblemTag> problems = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {
