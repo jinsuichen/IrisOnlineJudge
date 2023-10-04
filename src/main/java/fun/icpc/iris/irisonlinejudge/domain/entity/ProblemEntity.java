@@ -64,7 +64,7 @@ public class ProblemEntity {
      * The associated test cases.
      */
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<TestcaseEntity> testcases;
+    private List<TestCaseEntity> testcases;
 
     /**
      * The associated judge type.
