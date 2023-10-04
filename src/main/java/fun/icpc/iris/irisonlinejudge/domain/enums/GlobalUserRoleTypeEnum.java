@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /**
  * The users' role in the global system.
- * User has only one role in the global system.
+ * User has <b>only one role</b> in the global system.
  */
 @Getter
 @AllArgsConstructor
