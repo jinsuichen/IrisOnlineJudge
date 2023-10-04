@@ -23,7 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_user", indexes = {@Index(name = "idx_user_handle", columnList = "handle", unique = true)})
+@Table(name = "tb_user", indexes = {@Index(name = "uk_user_handle", columnList = "handle", unique = true)})
 public class UserEntity {
 
     @Id
