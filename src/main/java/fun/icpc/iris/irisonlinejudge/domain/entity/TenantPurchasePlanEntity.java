@@ -1,24 +1,21 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantProblem;
-import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_Tenant")
-public class TenantEntity {
+@Table(name = "tb_TenantPurchasePlan")
+public class TenantPurchasePlanEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,54 +30,44 @@ public class TenantEntity {
     @Column(nullable = false)
     private LocalDateTime gmtModified;
 
-    /**
-     * The name of the tenant.
-     */
     @Column(nullable = false, length = 200)
     private String name;
 
     /**
-     * The description of the tenant.
+     * The description of the tenant purchase plan.
      */
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     /**
-     * The member limit of the tenant.
+     * The member limit of the tenant purchase plan.
      */
     @Column(nullable = false)
     private Long memberLimit;
 
     /**
-     * The commit limit of the tenant.
+     * The commit limit of the tenant purchase plan.
      */
     @Column(nullable = false)
     private Long commitLimit;
 
     /**
-     * The associated users.
+     * The price before discount of the tenant purchase plan.
      */
-    @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY)
-    private Set<MpTenantUser> users = new HashSet<>();
-
-    /**
-     * The associated groups.
-     */
-    @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY)
-    private Set<GroupEntity> groups = new HashSet<>();
-
-    /**
-     * The associated problems.
-     */
-    @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY)
-    private Set<MpTenantProblem> problems = new HashSet<>();
-
-    /**
-     * The expiration time of the tenant.
-     */
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private LocalDateTime expirationTime;
+    private Long priceBeforeDiscount;
+
+    /**
+     * The price after discount of the tenant purchase plan.
+     */
+    @Column(nullable = false)
+    private Long priceAfterDiscount;
+
+    /**
+     * The duration of the tenant purchase plan.
+     */
+    @Column(nullable = false)
+    private Duration duration;
 
     @PrePersist
     protected void onCreate() {
@@ -92,5 +79,4 @@ public class TenantEntity {
     protected void onUpdate() {
         this.gmtModified = LocalDateTime.now();
     }
-
 }

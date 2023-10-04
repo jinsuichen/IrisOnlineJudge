@@ -1,4 +1,4 @@
-package fun.icpc.iris.irisonlinejudge.config;
+package fun.icpc.iris.irisonlinejudge.datainit;
 
 import fun.icpc.iris.irisonlinejudge.domain.entity.ProblemTagCatalogEntity;
 import fun.icpc.iris.irisonlinejudge.domain.entity.ProblemTagEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class DatabaseInitializer implements CommandLineRunner {
+public class ProblemTagInitializer implements CommandLineRunner {
 
     private final ProblemTagRepository problemTagRepository;
 
