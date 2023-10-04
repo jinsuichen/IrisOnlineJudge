@@ -1,6 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.service.impl;
 
 import fun.icpc.iris.irisonlinejudge.commons.context.UserContext;
+import fun.icpc.iris.irisonlinejudge.commons.exception.irisexception.NoSuchUserException;
 import fun.icpc.iris.irisonlinejudge.commons.exception.irisexception.SystemException;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessageFactory;
@@ -42,7 +43,6 @@ public class UserApplicationServiceImpl implements UserApplicationService {
 
     private final UserRepository userRepository;
     private final StringRedisTemplate stringRedisTemplate;
-    private final UserConverter userConverter;
 
     private final SecureRandom random = new SecureRandom();
 
@@ -66,7 +66,7 @@ public class UserApplicationServiceImpl implements UserApplicationService {
 
         // Save user to redis.
         String uuid = UUID.randomUUID().toString();
-        UserDTO userDTO = userConverter.toDTO(user);
+        UserDTO userDTO = UserConverter.toDTO(user);
         userDTO.setLoginUUID(uuid);
 
         stringRedisTemplate.opsForValue().set(
@@ -106,7 +106,7 @@ public class UserApplicationServiceImpl implements UserApplicationService {
 
         // Save user to redis.
         String uuid = UUID.randomUUID().toString();
-        UserDTO userDTO = userConverter.toDTO(user);
+        UserDTO userDTO = UserConverter.toDTO(user);
         userDTO.setLoginUUID(uuid);
 
         stringRedisTemplate.opsForValue().set(
@@ -157,7 +157,8 @@ public class UserApplicationServiceImpl implements UserApplicationService {
     @Override
     public IrisMessage<Boolean> changePassword(String oldPassword, String newPassword) {
         UserDTO userDTO = UserContext.get();
-        UserEntity entity = userConverter.toEntity(userDTO);
+        UserEntity entity = userRepository.findById(userDTO.getId())
+                .orElseThrow(NoSuchUserException::new);
 
         // Check old password.
         String hashOldPassword = hashPasswordWithRedisSalt(oldPassword, entity.getHandle());

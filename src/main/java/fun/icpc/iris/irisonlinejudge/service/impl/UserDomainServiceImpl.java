@@ -1,6 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.service.impl;
 
 import fun.icpc.iris.irisonlinejudge.commons.context.UserContext;
+import fun.icpc.iris.irisonlinejudge.commons.exception.irisexception.NoSuchUserException;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessageFactory;
 import fun.icpc.iris.irisonlinejudge.domain.converter.UserConverter;
@@ -30,7 +31,9 @@ public class UserDomainServiceImpl implements UserDomainService {
 
     @Override
     public IrisMessage<Boolean> changeNickName(String newNickName) {
-        UserEntity userEntity = userConverter.toEntity(UserContext.get());
+        Long userId = UserContext.get().getId();
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(NoSuchUserException::new);
         userEntity.setNickName(newNickName);
         userRepository.save(userEntity);
 
