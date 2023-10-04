@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "mp_group_team")
+@Table(name = "mp_Group_Team")
 public class MpGroupTeam {
 
     @Id

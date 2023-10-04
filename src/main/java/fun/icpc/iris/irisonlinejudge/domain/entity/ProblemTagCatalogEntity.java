@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_problemtagcatalog")
+@Table(name = "tb_ProblemTagCatalog")
 public class ProblemTagCatalogEntity {
 
     @Id
