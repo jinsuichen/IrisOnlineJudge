@@ -17,8 +17,8 @@ public class TenantDTO {
 
     private String description;
 
-    private Long commitLimit;
-
     private Long memberLimit;
+
+    private Long commitLimit;
 }
 
