@@ -75,7 +75,7 @@ public class AuthorizationAspect {
             Long tenantId = (Long) args[i];
             IrisMessage<List<TenantUserRoleTypeEnum>> tenantUserRole =
                     mpTenantUserDomainService.getTenantUserRole(userDTO.getId(), tenantId);
-            if (tenantUserRole.isFail()) {
+            if (!tenantUserRole.success()) {
                 throw new NoAuthException();
             }
 

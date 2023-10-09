@@ -35,8 +35,8 @@ public class UserController {
 
     @PostMapping("/password")
     public IrisMessage<Boolean> changePassword(@RequestBody ChangePasswordRequest request) {
-        if(ConstraintValidator.validatePassword(request.oldPassword()).isFail() ||
-                ConstraintValidator.validatePassword(request.newPassword()).isFail()) {
+        if(!ConstraintValidator.validatePassword(request.oldPassword()).success() ||
+                !ConstraintValidator.validatePassword(request.newPassword()).success()) {
             return IrisMessageFactory.fail("Invalid password.");
         }
 
@@ -49,7 +49,7 @@ public class UserController {
 
     @PostMapping("/nickName")
     public IrisMessage<Boolean> changeNickName(@RequestBody ChangeNickNameRequest request) {
-        if(ConstraintValidator.validateNickname(request.nickName()).isFail()) {
+        if(!ConstraintValidator.validateNickname(request.nickName()).success()) {
             return IrisMessageFactory.fail("Invalid nickname.");
         }
 

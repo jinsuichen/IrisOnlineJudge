@@ -22,7 +22,7 @@ public class AdminServiceImpl implements AdminService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime target = now.plus(duration);
         IrisMessage<Void> message = userDomainService.updateUnfreezeTime(userId, target);
-        if(message.isSuccess()) {
+        if (!message.success()) {
             return IrisMessageFactory.success(target);
         } else {
             return IrisMessageFactory.fail(null);
@@ -32,7 +32,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public IrisMessage<LocalDateTime> freezeUser(Long userId, LocalDateTime unfreezeTime) {
         IrisMessage<Void> message = userDomainService.updateUnfreezeTime(userId, unfreezeTime);
-        if(message.isSuccess()) {
+        if (!message.success()) {
             return IrisMessageFactory.success(unfreezeTime);
         } else {
             return IrisMessageFactory.fail(null);

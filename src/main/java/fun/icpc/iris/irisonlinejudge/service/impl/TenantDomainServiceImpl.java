@@ -48,7 +48,7 @@ public class TenantDomainServiceImpl implements TenantDomainService {
         }
 
         IrisMessage<UserEntity> user = userDomainService.getUser(userId);
-        if(user.isFail()){
+        if(!user.success()){
             return IrisMessageFactory.fail(user.message());
         }
         UserEntity userEntity = user.data();
@@ -56,7 +56,7 @@ public class TenantDomainServiceImpl implements TenantDomainService {
         // Get purchase plan.
         IrisMessage<TenantPurchasePlanEntity> tenantPurchasePlan =
                 tenantPurchasePlanDomainService.getTenantPurchasePlan(purchasePlanId);
-        if (tenantPurchasePlan.isFail()) {
+        if (!tenantPurchasePlan.success()) {
             return IrisMessageFactory.fail(tenantPurchasePlan.message());
         }
         TenantPurchasePlanEntity tenantPurchasePlanEntity = tenantPurchasePlan.data();

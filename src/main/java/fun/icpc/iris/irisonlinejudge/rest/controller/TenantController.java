@@ -22,7 +22,7 @@ public class TenantController {
     public IrisMessage<Long> createTenant(@RequestBody CreateTenantRequest createTenantRequest) {
         IrisMessage<Boolean> tenantName =
                 ConstraintValidator.validateTenantName(createTenantRequest.tenantDTO().getName());
-        if (tenantName.isFail()) {
+        if (!tenantName.success()) {
             return IrisMessageFactory.fail(tenantName.message());
         }
 

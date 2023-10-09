@@ -64,15 +64,15 @@ public class ConstraintValidator {
      */
     public static IrisMessage<Boolean> validateRegister(RegisterRequest request) {
         IrisMessage<Boolean> handleMessage = validateHandle(request.handle());
-        if (handleMessage.isFail()) {
+        if (!handleMessage.success()) {
             return handleMessage;
         }
         IrisMessage<Boolean> nicknameMessage = validateNickname(request.nickName());
-        if (nicknameMessage.isFail()) {
+        if (!nicknameMessage.success()) {
             return nicknameMessage;
         }
         IrisMessage<Boolean> passwordMessage = validatePassword(request.password());
-        if (passwordMessage.isFail()) {
+        if (!passwordMessage.success()) {
             return passwordMessage;
         }
         return IrisMessageFactory.success(true);
@@ -86,11 +86,11 @@ public class ConstraintValidator {
      */
     public static IrisMessage<Boolean> validateLogin(LoginRequest request) {
         IrisMessage<Boolean> handleMessage = validateHandle(request.handle());
-        if (handleMessage.isFail()) {
+        if (!handleMessage.success()) {
             return handleMessage;
         }
         IrisMessage<Boolean> passwordMessage = validatePassword(request.password());
-        if (passwordMessage.isFail()) {
+        if (!passwordMessage.success()) {
             return passwordMessage;
         }
         return IrisMessageFactory.success(true);

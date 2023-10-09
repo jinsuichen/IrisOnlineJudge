@@ -18,7 +18,7 @@ public class AuthenticationController {
 
     @PostMapping("/user/register")
     public IrisMessage<String> register(@RequestBody RegisterRequest request) {
-        if(ConstraintValidator.validateRegister(request).isFail()) {
+        if (!ConstraintValidator.validateRegister(request).success()) {
             return IrisMessageFactory.fail("Invalid register request.");
         }
 
@@ -30,7 +30,7 @@ public class AuthenticationController {
 
     @PostMapping("/user/login")
     public IrisMessage<String> login(@RequestBody LoginRequest request) {
-        if(ConstraintValidator.validateLogin(request).isFail()) {
+        if (!ConstraintValidator.validateLogin(request).success()) {
             return IrisMessageFactory.fail("Invalid register request.");
         }
 
