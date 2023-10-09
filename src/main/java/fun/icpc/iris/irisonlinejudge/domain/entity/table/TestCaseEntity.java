@@ -1,8 +1,5 @@
-package fun.icpc.iris.irisonlinejudge.domain.entity.mapping;
+package fun.icpc.iris.irisonlinejudge.domain.entity.table;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.table.TenantEntity;
-import fun.icpc.iris.irisonlinejudge.domain.entity.table.UserEntity;
-import fun.icpc.iris.irisonlinejudge.domain.enums.TenantUserRoleTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,13 +8,16 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * The test case of a problem.
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "mp_Tenant_User")
-public class MpTenantUser {
+@Table(name = "tb_TestCase")
+public class TestCaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,25 +33,41 @@ public class MpTenantUser {
     private LocalDateTime gmtModified;
 
     /**
-     * The associated tenant.
+     * The associated problem.
      */
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tenant_id", nullable = false)
-    private TenantEntity tenant;
+    @JoinColumn(name = "problem_id", nullable = false)
+    private ProblemEntity problem;
 
     /**
-     * The associated user.
+     * The input of the test case.
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String input;
 
     /**
-     * The role of the user in the tenant.
+     * The output of the test case.
+     */
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String output;
+
+    /**
+     * The score of the test case.
      */
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TenantUserRoleTypeEnum role;
+    private Integer score;
+
+    /**
+     * Is the test case a sample?
+     */
+    @Column(nullable = false)
+    private Boolean isSample;
+
+    /**
+     * Is the test case public?
+     */
+    @Column(nullable = false)
+    private Boolean isPublic;
 
     @PrePersist
     protected void onCreate() {

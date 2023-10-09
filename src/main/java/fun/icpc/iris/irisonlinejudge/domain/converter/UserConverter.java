@@ -1,7 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.domain.converter;
 
 import fun.icpc.iris.irisonlinejudge.domain.dto.UserDTO;
-import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.UserEntity;
 import org.apache.commons.lang3.StringUtils;
 public class UserConverter {
 

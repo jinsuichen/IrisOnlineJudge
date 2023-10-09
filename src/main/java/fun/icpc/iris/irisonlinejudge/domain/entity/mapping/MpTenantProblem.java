@@ -1,7 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.domain.entity.mapping;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.ProblemEntity;
-import fun.icpc.iris.irisonlinejudge.domain.entity.TenantEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.ProblemEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.TenantEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 

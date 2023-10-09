@@ -2,12 +2,12 @@ package fun.icpc.iris.irisonlinejudge.service.impl;
 
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessageFactory;
-import fun.icpc.iris.irisonlinejudge.domain.entity.TenantEntity;
-import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantUser;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.TenantEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.UserEntity;
 import fun.icpc.iris.irisonlinejudge.domain.enums.TenantUserRoleTypeEnum;
 import fun.icpc.iris.irisonlinejudge.repo.MpTenantUserRepository;
-import fun.icpc.iris.irisonlinejudge.service.MpTenantUserDomainService;
+import fun.icpc.iris.irisonlinejudge.service.domainservice.MpTenantUserDomainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package fun.icpc.iris.irisonlinejudge.repo;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.ProblemTagEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.ProblemTagEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

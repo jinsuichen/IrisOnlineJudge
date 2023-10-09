@@ -1,6 +1,6 @@
 package fun.icpc.iris.irisonlinejudge.repo;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.TenantEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.TenantEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

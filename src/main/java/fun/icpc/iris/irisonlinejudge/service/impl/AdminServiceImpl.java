@@ -2,7 +2,7 @@ package fun.icpc.iris.irisonlinejudge.service.impl;
 
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessageFactory;
-import fun.icpc.iris.irisonlinejudge.service.AdminService;
+import fun.icpc.iris.irisonlinejudge.service.applicationservice.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

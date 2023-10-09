@@ -1,7 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.datainit;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.ProblemTagCatalogEntity;
-import fun.icpc.iris.irisonlinejudge.domain.entity.ProblemTagEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.ProblemTagCatalogEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.ProblemTagEntity;
 import fun.icpc.iris.irisonlinejudge.repo.ProblemTagCatalogRepository;
 import fun.icpc.iris.irisonlinejudge.repo.ProblemTagRepository;
 import lombok.RequiredArgsConstructor;

@@ -9,7 +9,7 @@ import fun.icpc.iris.irisonlinejudge.commons.exception.irisexception.SandboxRunn
 import fun.icpc.iris.irisonlinejudge.commons.util.TarUtils;
 import fun.icpc.iris.irisonlinejudge.domain.enums.ExecCommandTypeEnum;
 import fun.icpc.iris.irisonlinejudge.domain.record.RunningResult;
-import fun.icpc.iris.irisonlinejudge.service.JudgeService;
+import fun.icpc.iris.irisonlinejudge.service.applicationservice.JudgeService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;

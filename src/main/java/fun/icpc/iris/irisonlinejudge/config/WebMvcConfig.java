@@ -1,7 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.config;
 
-import fun.icpc.iris.irisonlinejudge.controller.interceptor.LoginInterceptor;
-import fun.icpc.iris.irisonlinejudge.controller.interceptor.UserAccessInterceptor;
+import fun.icpc.iris.irisonlinejudge.rest.interceptor.LoginInterceptor;
+import fun.icpc.iris.irisonlinejudge.rest.interceptor.UserAccessInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;

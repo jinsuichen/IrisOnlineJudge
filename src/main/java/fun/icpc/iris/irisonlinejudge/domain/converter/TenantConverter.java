@@ -1,7 +1,7 @@
 package fun.icpc.iris.irisonlinejudge.domain.converter;
 
 import fun.icpc.iris.irisonlinejudge.domain.dto.TenantDTO;
-import fun.icpc.iris.irisonlinejudge.domain.entity.TenantEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.TenantEntity;
 
 public class TenantConverter {
 

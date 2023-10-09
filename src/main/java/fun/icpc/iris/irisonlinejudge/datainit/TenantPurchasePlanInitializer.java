@@ -1,6 +1,6 @@
 package fun.icpc.iris.irisonlinejudge.datainit;
 
-import fun.icpc.iris.irisonlinejudge.domain.entity.TenantPurchasePlanEntity;
+import fun.icpc.iris.irisonlinejudge.domain.entity.table.TenantPurchasePlanEntity;
 import fun.icpc.iris.irisonlinejudge.repo.TenantPurchasePlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
