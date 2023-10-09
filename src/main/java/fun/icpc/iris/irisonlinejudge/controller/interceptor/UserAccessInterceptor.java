@@ -4,7 +4,6 @@ import fun.icpc.iris.irisonlinejudge.commons.context.UserContext;
 import fun.icpc.iris.irisonlinejudge.commons.exception.irisexception.AuthSystemException;
 import fun.icpc.iris.irisonlinejudge.commons.util.JsonUtils;
 import fun.icpc.iris.irisonlinejudge.commons.util.RedisConstantsUtils;
-import fun.icpc.iris.irisonlinejudge.domain.converter.UserConverter;
 import fun.icpc.iris.irisonlinejudge.domain.dto.UserDTO;
 import fun.icpc.iris.irisonlinejudge.domain.record.LoginToken;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,8 +30,6 @@ import java.util.Optional;
 public class UserAccessInterceptor implements HandlerInterceptor {
 
     private final StringRedisTemplate stringRedisTemplate;
-
-    private final UserConverter userConverter;
 
     private final String BEARER_PREFIX = "Bearer ";
 

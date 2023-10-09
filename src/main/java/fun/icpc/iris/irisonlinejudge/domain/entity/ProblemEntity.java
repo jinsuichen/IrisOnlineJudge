@@ -70,6 +70,7 @@ public class ProblemEntity {
      * The associated judge type.
      */
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private JudgerTypeEnum judgeType;
 
     /**

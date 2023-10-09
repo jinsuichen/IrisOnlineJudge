@@ -36,7 +36,7 @@ public class TenantEntity {
     /**
      * The name of the tenant.
      */
-    @Column(nullable = false, length = 200)
+    @Column(unique = true, nullable = false, length = 200)
     private String name;
 
     /**

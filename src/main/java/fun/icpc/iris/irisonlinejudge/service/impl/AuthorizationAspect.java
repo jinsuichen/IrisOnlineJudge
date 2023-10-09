@@ -7,7 +7,7 @@ import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
 import fun.icpc.iris.irisonlinejudge.domain.dto.UserDTO;
 import fun.icpc.iris.irisonlinejudge.domain.enums.GlobalUserRoleTypeEnum;
 import fun.icpc.iris.irisonlinejudge.domain.enums.TenantUserRoleTypeEnum;
-import fun.icpc.iris.irisonlinejudge.service.UserDomainService;
+import fun.icpc.iris.irisonlinejudge.service.MpTenantUserDomainService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class AuthorizationAspect {
 
-    private final UserDomainService userDomainService;
+    private final MpTenantUserDomainService mpTenantUserDomainService;
 
     @Before("@annotation(authorizationGlobal)")
     public void checkAuthorization(JoinPoint joinPoint, AuthorizationGlobal authorizationGlobal) {
@@ -74,7 +74,7 @@ public class AuthorizationAspect {
             }
             Long tenantId = (Long) args[i];
             IrisMessage<List<TenantUserRoleTypeEnum>> tenantUserRole =
-                    userDomainService.getTenantUserRole(userDTO.getId(), tenantId);
+                    mpTenantUserDomainService.getTenantUserRole(userDTO.getId(), tenantId);
             if (tenantUserRole.isFail()) {
                 throw new NoAuthException();
             }

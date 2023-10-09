@@ -1,11 +1,10 @@
 package fun.icpc.iris.irisonlinejudge.service;
 
 import fun.icpc.iris.irisonlinejudge.commons.util.IrisMessage;
+import fun.icpc.iris.irisonlinejudge.domain.entity.UserEntity;
 import fun.icpc.iris.irisonlinejudge.domain.enums.GlobalUserRoleTypeEnum;
-import fun.icpc.iris.irisonlinejudge.domain.enums.TenantUserRoleTypeEnum;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface UserDomainService {
 
@@ -34,15 +33,6 @@ public interface UserDomainService {
     IrisMessage<GlobalUserRoleTypeEnum> getGlobalUserRole(String handle);
 
     /**
-     * Get the tenant role of the user.
-     *
-     * @param userId   The id of the user.
-     * @param tenantId The id of the tenant.
-     * @return The tenant role of the user.
-     */
-    IrisMessage<List<TenantUserRoleTypeEnum>> getTenantUserRole(Long userId, Long tenantId);
-
-    /**
      * Freeze user for a period of time
      *
      * @param userId       user id
@@ -50,4 +40,12 @@ public interface UserDomainService {
      * @return is success
      */
     IrisMessage<Void> updateUnfreezeTime(Long userId, LocalDateTime unfreezeTime);
+
+    /**
+     * Get user by id
+     *
+     * @param userId user id
+     * @return user
+     */
+    IrisMessage<UserEntity> getUser(Long userId);
 }

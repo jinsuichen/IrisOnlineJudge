@@ -50,6 +50,7 @@ public class MpTenantUser {
      * The role of the user in the tenant.
      */
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TenantUserRoleTypeEnum role;
 
     @PrePersist

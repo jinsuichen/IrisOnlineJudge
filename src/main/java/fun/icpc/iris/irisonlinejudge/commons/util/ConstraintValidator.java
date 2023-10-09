@@ -20,6 +20,18 @@ public class ConstraintValidator {
             "underscores, and the length must be between 1 and 20.";
 
     /**
+     * The regex for tenant name.
+     * The length must be between 1 and 20, any character is allowed.
+     */
+    public static final String TENANT_NAME_REGEX = "^[\\s\\S]{1,20}$";
+
+    /**
+     * The message for tenant name regex.
+     */
+    public static final String TENANT_NAME_REGEX_MESSAGE = "The length must be between 1 and 20, any character is " +
+            "allowed.";
+
+    /**
      * The regex for password.
      * Must contain at least one uppercase letter, one lowercase letter and one number.
      * The length must be between 8 and 60.
@@ -34,16 +46,15 @@ public class ConstraintValidator {
 
     /**
      * The regex for nickname.
-     * Only letters, numbers, underscores, hyphens and spaces are allowed.
-     * The length must be between 1 and 50.
+     * The length must be between 1 and 20, any character is allowed.
      */
-    public static final String NICKNAME_REGEX = "^[a-zA-Z0-9_\\- ]{1,50}$";
+    public static final String NICKNAME_REGEX = "^[\\s\\S]{1,20}$";
 
     /**
      * The message for nickname regex.
      */
-    public static final String NICKNAME_REGEX_MESSAGE = "The nickname can only contain letters, numbers, underscores," +
-            " hyphens and spaces, and the length must be between 1 and 50.";
+    public static final String NICKNAME_REGEX_MESSAGE = "The length must be between 1 and 20, any character is " +
+            "allowed.";
 
     /**
      * Validate the register request.
@@ -129,6 +140,16 @@ public class ConstraintValidator {
         }
         if (!nickname.matches(NICKNAME_REGEX)) {
             return IrisMessageFactory.fail(NICKNAME_REGEX_MESSAGE);
+        }
+        return IrisMessageFactory.success(true);
+    }
+
+    public static IrisMessage<Boolean> validateTenantName(String tenantName) {
+        if (StringUtils.isEmpty(tenantName)) {
+            return IrisMessageFactory.fail("The tenant name cannot be empty.");
+        }
+        if (!tenantName.matches(TENANT_NAME_REGEX)) {
+            return IrisMessageFactory.fail(TENANT_NAME_REGEX_MESSAGE);
         }
         return IrisMessageFactory.success(true);
     }
