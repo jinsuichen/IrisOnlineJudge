@@ -2,7 +2,7 @@ package fun.icpc.iris.irisonlinejudge.domain.entity.table;
 
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpProblemProblemTag;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantProblem;
-import fun.icpc.iris.irisonlinejudge.domain.enums.JudgerTypeEnum;
+import fun.icpc.iris.irisonlinejudge.domain.enums.CheckerTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -71,7 +71,7 @@ public class ProblemEntity {
      */
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private JudgerTypeEnum judgeType;
+    private CheckerTypeEnum checkerType;
 
     /**
      * The associated tenants.
