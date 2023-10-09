@@ -3,6 +3,7 @@ package fun.icpc.iris.irisonlinejudge.domain.entity.table;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpProblemProblemTag;
 import fun.icpc.iris.irisonlinejudge.domain.entity.mapping.MpTenantProblem;
 import fun.icpc.iris.irisonlinejudge.domain.enums.CheckerTypeEnum;
+import fun.icpc.iris.irisonlinejudge.domain.enums.ProblemDifficultyTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -64,7 +65,7 @@ public class ProblemEntity {
      * The associated test cases.
      */
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<TestCaseEntity> testcases;
+    private List<TestCaseEntity> testCases;
 
     /**
      * The associated judge type.
@@ -84,6 +85,13 @@ public class ProblemEntity {
      */
     @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
     private List<MpProblemProblemTag> tags;
+
+    /**
+     * The associated problem difficulty
+     */
+    @Column()
+    @Enumerated(EnumType.STRING)
+    private ProblemDifficultyTypeEnum difficulty;
 
     @PrePersist
     protected void onCreate() {
