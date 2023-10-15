@@ -93,6 +93,19 @@ public class ProblemEntity {
     @Enumerated(EnumType.STRING)
     private ProblemDifficultyTypeEnum difficulty;
 
+    /**
+     * Is the problem public?
+     */
+    @Column(nullable = false)
+    private Boolean isPublic;
+
+    /**
+     * Created by which user.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id", nullable = false)
+    private UserEntity creator;
+
     @PrePersist
     protected void onCreate() {
         this.gmtCreated = LocalDateTime.now();

@@ -69,6 +69,13 @@ public class TestCaseEntity {
     @Column(nullable = false)
     private Boolean isPublic;
 
+    /**
+     * Created by which user.
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "creator_id", nullable = false)
+    private UserEntity creator;
+
     @PrePersist
     protected void onCreate() {
         this.gmtCreated = LocalDateTime.now();

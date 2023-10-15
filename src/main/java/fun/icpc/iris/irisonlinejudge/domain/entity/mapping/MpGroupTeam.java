@@ -3,11 +3,17 @@ package fun.icpc.iris.irisonlinejudge.domain.entity.mapping;
 import fun.icpc.iris.irisonlinejudge.domain.entity.table.GroupEntity;
 import fun.icpc.iris.irisonlinejudge.domain.entity.table.TeamEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "mp_Group_Team")
 public class MpGroupTeam {
