@@ -1,7 +1,7 @@
 package fun.icpc.iris.adapter.rest.controller;
 
 import fun.icpc.iris.application.ConstraintValidator;
-import fun.icpc.iris.application.command.CreateTenantRequest;
+import fun.icpc.iris.application.command.CreateTenantCommand;
 import fun.icpc.iris.application.service.domainservice.TenantDomainService;
 import fun.icpc.iris.sharedkernel.util.IrisMessage;
 import fun.icpc.iris.sharedkernel.util.IrisMessageFactory;
@@ -19,16 +19,16 @@ public class TenantController {
     private final TenantDomainService tenantDomainService;
 
     @PostMapping("/")
-    public IrisMessage<Long> createTenant(@RequestBody CreateTenantRequest createTenantRequest) {
+    public IrisMessage<Long> createTenant(@RequestBody CreateTenantCommand createTenantCommand) {
         IrisMessage<Boolean> tenantName =
-                ConstraintValidator.validateTenantName(createTenantRequest.tenantDTO().getName());
+                ConstraintValidator.validateTenantName(createTenantCommand.tenantDTO().getName());
         if (!tenantName.success()) {
             return IrisMessageFactory.fail(tenantName.message());
         }
 
         return tenantDomainService.createTenant(
-                createTenantRequest.tenantDTO(),
-                createTenantRequest.purchasePlanId());
+                createTenantCommand.tenantDTO(),
+                createTenantCommand.purchasePlanId());
     }
 
 }

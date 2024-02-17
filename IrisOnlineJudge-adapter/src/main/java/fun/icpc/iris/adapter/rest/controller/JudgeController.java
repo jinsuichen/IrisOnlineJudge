@@ -1,7 +1,7 @@
 package fun.icpc.iris.adapter.rest.controller;
 
 
-import fun.icpc.iris.application.command.RunningRequest;
+import fun.icpc.iris.application.command.RunningCommand;
 import fun.icpc.iris.application.command.RunningResult;
 import fun.icpc.iris.application.service.applicationservice.JudgeService;
 import fun.icpc.iris.sharedkernel.enums.ExecCommandTypeEnum;
@@ -20,13 +20,13 @@ public class JudgeController {
     private final JudgeService judgeService;
 
     @PostMapping("/run/{language}")
-    public IrisMessage<RunningResult> judge(@PathVariable String language, @RequestBody RunningRequest runningRequestDTO) {
+    public IrisMessage<RunningResult> judge(@PathVariable String language, @RequestBody RunningCommand runningCommandDTO) {
         ExecCommandTypeEnum commandTypeEnum = ExecCommandTypeEnum.fromLanguage(language);
         if(Objects.isNull(commandTypeEnum)) {
             return IrisMessageFactory.fail("unsupported language");
         }
 
-        RunningResult runningResult = judgeService.run(runningRequestDTO.input(), runningRequestDTO.code(), commandTypeEnum);
+        RunningResult runningResult = judgeService.run(runningCommandDTO.input(), runningCommandDTO.code(), commandTypeEnum);
 
         return IrisMessageFactory.success(runningResult);
     }

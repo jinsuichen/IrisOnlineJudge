@@ -1,7 +1,7 @@
 package fun.icpc.iris.adapter.rest.controller;
 
 import fun.icpc.iris.application.ConstraintValidator;
-import fun.icpc.iris.application.command.CreateProblemRequest;
+import fun.icpc.iris.application.command.CreateProblemCommand;
 import fun.icpc.iris.application.dto.ProblemDTO;
 import fun.icpc.iris.application.dto.TestCaseDTO;
 import fun.icpc.iris.application.service.aop.AuthGlobal;
@@ -33,7 +33,7 @@ public class ProblemController {
     @PostMapping("/{tenantId}/set")
     @AuthGlobal(GlobalUserRoleTypeEnum.USER)
     @AuthTenant(TenantUserRoleTypeEnum.PROBLEM_AUTHOR)
-    public IrisMessage<Long> createProblem(@RequestBody CreateProblemRequest request,
+    public IrisMessage<Long> createProblem(@RequestBody CreateProblemCommand request,
                                            @PathVariable Long tenantId) {
         ProblemDTO problemDTO = request.problemDTO();
         List<TestCaseDTO> testCaseDTOS = request.testCaseDTOList();

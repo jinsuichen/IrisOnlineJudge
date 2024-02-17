@@ -1,8 +1,8 @@
 package fun.icpc.iris.adapter.rest.controller;
 
 import fun.icpc.iris.application.ConstraintValidator;
-import fun.icpc.iris.application.command.ChangeNickNameRequest;
-import fun.icpc.iris.application.command.ChangePasswordRequest;
+import fun.icpc.iris.application.command.ChangeNickNameCommand;
+import fun.icpc.iris.application.command.ChangePasswordCommand;
 import fun.icpc.iris.application.service.applicationservice.UserApplicationService;
 import fun.icpc.iris.application.service.domainservice.UserDomainService;
 import fun.icpc.iris.sharedkernel.util.IrisMessage;
@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/password")
-    public IrisMessage<Boolean> changePassword(@RequestBody ChangePasswordRequest request) {
+    public IrisMessage<Boolean> changePassword(@RequestBody ChangePasswordCommand request) {
         if(!ConstraintValidator.validatePassword(request.oldPassword()).success() ||
                 !ConstraintValidator.validatePassword(request.newPassword()).success()) {
             return IrisMessageFactory.fail("Invalid password.");
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/nickName")
-    public IrisMessage<Boolean> changeNickName(@RequestBody ChangeNickNameRequest request) {
+    public IrisMessage<Boolean> changeNickName(@RequestBody ChangeNickNameCommand request) {
         if(!ConstraintValidator.validateNickname(request.nickName()).success()) {
             return IrisMessageFactory.fail("Invalid nickname.");
         }

@@ -1,8 +1,8 @@
 package fun.icpc.iris.adapter.rest.controller;
 
 import fun.icpc.iris.application.ConstraintValidator;
-import fun.icpc.iris.application.command.LoginRequest;
-import fun.icpc.iris.application.command.RegisterRequest;
+import fun.icpc.iris.application.command.LoginCommand;
+import fun.icpc.iris.application.command.RegisterCommand;
 import fun.icpc.iris.application.service.applicationservice.UserApplicationService;
 import fun.icpc.iris.sharedkernel.util.IrisMessage;
 import fun.icpc.iris.sharedkernel.util.IrisMessageFactory;
@@ -17,7 +17,7 @@ public class AuthenticationController {
     private final UserApplicationService userApplicationService;
 
     @PostMapping("/user/register")
-    public IrisMessage<String> register(@RequestBody RegisterRequest request) {
+    public IrisMessage<String> register(@RequestBody RegisterCommand request) {
         if (!ConstraintValidator.validateRegister(request).success()) {
             return IrisMessageFactory.fail("Invalid register request.");
         }
@@ -29,7 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/user/login")
-    public IrisMessage<String> login(@RequestBody LoginRequest request) {
+    public IrisMessage<String> login(@RequestBody LoginCommand request) {
         if (!ConstraintValidator.validateLogin(request).success()) {
             return IrisMessageFactory.fail("Invalid register request.");
         }

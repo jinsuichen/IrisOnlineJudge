@@ -1,7 +1,7 @@
 package fun.icpc.iris.application;
 
-import fun.icpc.iris.application.command.LoginRequest;
-import fun.icpc.iris.application.command.RegisterRequest;
+import fun.icpc.iris.application.command.LoginCommand;
+import fun.icpc.iris.application.command.RegisterCommand;
 import fun.icpc.iris.application.dto.ProblemDTO;
 import fun.icpc.iris.application.dto.TestCaseDTO;
 import fun.icpc.iris.sharedkernel.util.IrisMessage;
@@ -108,7 +108,7 @@ public class ConstraintValidator {
      * @param request The register request.
      * @return If the register request is valid, return true, else return false.
      */
-    public static IrisMessage<Boolean> validateRegister(RegisterRequest request) {
+    public static IrisMessage<Boolean> validateRegister(RegisterCommand request) {
         IrisMessage<Boolean> handleMessage = validateHandle(request.handle());
         if (!handleMessage.success()) {
             return handleMessage;
@@ -130,7 +130,7 @@ public class ConstraintValidator {
      * @param request The login request.
      * @return If the login request is valid, return true, else return false.
      */
-    public static IrisMessage<Boolean> validateLogin(LoginRequest request) {
+    public static IrisMessage<Boolean> validateLogin(LoginCommand request) {
         IrisMessage<Boolean> handleMessage = validateHandle(request.handle());
         if (!handleMessage.success()) {
             return handleMessage;

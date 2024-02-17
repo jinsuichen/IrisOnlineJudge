@@ -4,7 +4,7 @@ import fun.icpc.iris.application.dto.TestCaseDTO;
 
 import java.util.List;
 
-public record CreateProblemRequest(
+public record CreateProblemCommand(
 
         ProblemDTO problemDTO,
 

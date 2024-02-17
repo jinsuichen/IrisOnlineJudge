@@ -1,7 +1,6 @@
 package fun.icpc.iris.application.command;
-public record RegisterRequest(
+public record LoginCommand(
         String handle,
-        String nickName,
         String password
 ) {
 }
