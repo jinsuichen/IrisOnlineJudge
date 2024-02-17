@@ -8,15 +8,68 @@
         <version>3.0.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>fun.icpc.iris</groupId>
     <artifactId>IrisOnlineJudge</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
+
+    <packaging>pom</packaging>
     <name>IrisOnlineJudge</name>
     <description>IrisOnlineJudge</description>
+
+    <modules>
+        <module>IrisOnlineJudge-starter</module>
+        <module>IrisOnlineJudge-domain</module>
+        <module>IrisOnlineJudge-infrastructure</module>
+        <module>IrisOnlineJudge-adapter</module>
+        <module>IrisOnlineJudge-shared-kernel</module>
+        <module>IrisOnlineJudge-application</module>
+    </modules>
+
     <properties>
         <java.version>17</java.version>
+        <revision>0.0.3</revision>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>fun.icpc.iris</groupId>
+                <artifactId>IrisOnlineJudge-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>fun.icpc.iris</groupId>
+                <artifactId>IrisOnlineJudge-shared-kernel</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>fun.icpc.iris</groupId>
+                <artifactId>IrisOnlineJudge-infrastructure</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>fun.icpc.iris</groupId>
+                <artifactId>IrisOnlineJudge-domain</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>fun.icpc.iris</groupId>
+                <artifactId>IrisOnlineJudge-application</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>fun.icpc.iris</groupId>
+                <artifactId>IrisOnlineJudge-adapter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -160,22 +213,5 @@
         </dependency>
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
